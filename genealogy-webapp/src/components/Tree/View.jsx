@@ -1,59 +1,232 @@
-import React, { useState, useEffect, Component } from 'react';
-import FamilyTree from '@balkangraph/familytree.js';
+import React, { useState } from 'react';
+import TreeTemplate from './Template';
 
-FamilyTree.templates.myTemplate = Object.assign({}, FamilyTree.templates.tommy);
-FamilyTree.templates.myTemplate.size = [250, 150];
-FamilyTree.templates.myTemplate.node ='<rect x="0" y="0" width="200" height="100" rx="10" ry="10" stroke-width="1" stroke="#aeaeae"></rect>';
-FamilyTree.templates.myTemplate.defs = '';
-FamilyTree.templates.myTemplate.field_0 = '<text style="font-size: 20px;" fill="#ffffff" x="100" y="90" text-anchor="middle">{val}</text>';
-FamilyTree.templates.myTemplate.field_1 = '<text style="font-size: 10px;" fill="#ffffff" x="100" y="60" text-anchor="middle">{val}</text>';
+const GENDER = Object.freeze({
+	MALE: 0,
+	FEMALE: 1
+});
 
-FamilyTree.templates.myTemplate.pointer =
-'<g data-pointer="pointer" transform="matrix(0,0,0,0,100,100)">><g transform="matrix(0.3,0,0,0.3,-17,-17)">'
-+ '<polygon fill="rgb(255, 202, 40)" points="53.004,173.004 53.004,66.996 0,120" />'
-+ '<polygon fill="rgb(255, 202, 40)" points="186.996,66.996 186.996,173.004 240,120" />'
-+ '<polygon fill="rgb(255, 202, 40)" points="66.996,53.004 173.004,53.004 120,0" />'
-+ '<polygon fill="rgb(255, 202, 40)" points="120,240 173.004,186.996 66.996,186.996" />'
-+ '<circle fill="rgb(255, 202, 40)" cx="120" cy="120" r="30" />'
-+ '</g></g>';
-FamilyTree.templates.myTemplate_male = Object.assign({}, FamilyTree.templates.myTemplate);
-FamilyTree.templates.myTemplate_male.node = '<rect x="0" y="25" width="200" height="100" rx="10" ry="10" fill="#039be5" stroke-width="1" stroke="#aeaeae"></rect>';
-FamilyTree.templates.myTemplate_female = Object.assign({}, FamilyTree.templates.myTemplate);
-FamilyTree.templates.myTemplate_female.node = '<rect x="0" y="25" width="200" height="100" rx="10" ry="10" fill="#FF46A3" stroke-width="1" stroke="#aeaeae"></rect>';
+const RELATIONSHIP = Object.freeze({
+	eRELATIONSHIP_KETHON: 0,
+	eRELATIONSHIP_BO_CON: 1,
+	eRELATIONSHIP_ME_CON: 2
 
 
+})
 
+export default function TreeView () {
 
-
-function TreeView(nodes) {
-	const [divRef, setDivRef] = useState(React.createRef());
-	const [family, setFamily] = useState(null);
+	let papa = {
+		id: 1,
+		surname: "Nguyễn",
+		lastname: "Huy Ước",
+		gender: 0,
+			// MALE = 0,
+			// FEMALE = 1
+		dob: "30-03-1975", // date of birth
+		dod: "", // date of death, nullable
+		birth_place: "Dương Nội",
+		current_place: "Dương Nội",
+		is_clan_leader: true,
+		gen_no: 5,
+		image: 'https://cdn.balkan.app/shared/2.jpg',
+	}
+	let mama = {
+		id: papa.id + 1,
+		surname: "Vũ",
+		lastname: "Thị Hảo",
+		gender: 1,
+			// MALE = 0,
+			// FEMALE = 1
+		dob: "13-08-1975", // date of birth
+		dod: "", // date of death, nullable
+		birth_place: "Dương Nội",
+		current_place: "Dương Nội",
+		is_clan_leader: false,
+		gen_no: 5,
+		image: 'https://cdn.balkan.app/shared/m30/5.jpg',
+	}
+	let bro = {
+		id: mama.id + 1,
+		surname: "Nguyễn",
+		lastname: "Huy Nguyện",
+		gender: 0,
+			// MALE = 0,
+			// FEMALE = 1
+		dob: "18-06-1996", // date of birth
+		dod: "", // date of death, nullable
+		birth_place: "Dương Nội",
+		current_place: "Dương Nội",
+		is_clan_leader: false,
+		gen_no: 6,
+		image: 'https://cdn.balkan.app/shared/m10/2.jpg',
+	}
+	let me = {
+		id: bro.id + 1,
+		surname: "Nguyễn",
+		lastname: "Tiến Đạt",
+		gender: 0,
+			// MALE = 0,
+			// FEMALE = 1
+		dob: "28-03-1999", // date of birth
+		dod: "", // date of death, nullable
+		birth_place: "Dương Nội",
+		current_place: "Dương Nội",
+		is_clan_leader: false,
+		gen_no: 6,
+		image: 'https://cdn.balkan.app/shared/m10/1.jpg',
+	}
 	
-	useEffect(() => {
-		const nodeBinding = {
-			field_0: 'name',
-			field_1: 'gender',
-			img_0: 'img'
-		}
+	let papa_mama = {
+		id: 100,
+		main_mem_id: papa.id,
+		sub_mem_id: mama.id,
+		relate_code: RELATIONSHIP.eRELATIONSHIP_KETHON,
+		date_start: "dont know",
+	}
+	// let mama_papa = {
+	// 	id: 101,
+	// 	main_mem_id: mama.id,
+	// 	sub_mem_id: papa.id,
+	// 	relate_code: RELATIONSHIP.eRELATIONSHIP_VO,
+	// 	date_start: "dont know",
+	// }
+	let papa_bro = {
+		id: 102,
+		main_mem_id: papa.id,
+		sub_mem_id: bro.id,
+		relate_code: RELATIONSHIP.eRELATIONSHIP_BO_CON,
+		date_start: "dont know",
+	}
+	// let bro_papa = {
+	// 	id: 103,
+	// 	main_mem_id: bro.id,
+	// 	sub_mem_id: papa.id,
+	// 	relate_code: RELATIONSHIP.eRELATIONSHIP_CON,
+	// 	date_start: "dont know",
+	// }
+	let mama_bro = {
+		id: 111,
+		main_mem_id: mama.id,
+		sub_mem_id: bro.id,
+		relate_code: RELATIONSHIP.eRELATIONSHIP_ME_CON,
+		date_start: "dont know",
+	}
+	// let bro_mama = {
+	// 	id: 112,
+	// 	main_mem_id: bro.id,
+	// 	sub_mem_id: mama.id,
+	// 	relate_code: RELATIONSHIP.eRELATIONSHIP_CON,
+	// 	date_start: "dont know",
+	// }
+	let papa_me = {
+		id: 104,
+		main_mem_id: papa.id,
+		sub_mem_id: me.id,
+		relate_code: RELATIONSHIP.eRELATIONSHIP_BO_CON,
+		date_start: "dont know",
+	}
+	// let me_papa = {
+	// 	id: 105,
+	// 	main_mem_id: me.id,
+	// 	sub_mem_id: papa.id,
+	// 	relate_code: RELATIONSHIP.eRELATIONSHIP_CON,
+	// 	date_start: "dont know",
+	// }
+	let mama_me = {
+		id: 113,
+		main_mem_id: mama.id,
+		sub_mem_id: me.id,
+		relate_code: RELATIONSHIP.eRELATIONSHIP_ME_CON,
+		date_start: "dont know",
+	}
+	// let me_mama = {
+	// 	id: 114,
+	// 	main_mem_id: me.id,
+	// 	sub_mem_id: mama.id,
+	// 	relate_code: RELATIONSHIP.eRELATIONSHIP_CON,
+	// 	date_start: "dont know",
+	// }
 
-		const concept = {
-			nodes: nodes.nodes,
-			nodeBinding: nodeBinding,
-			template: "myTemplate",
-			mode:"light",
-			scaleInitial:FamilyTree.match.boundary
-		}
-		const myFam = new FamilyTree(divRef.current, concept);
-		
-		setFamily(myFam);
-	}, [nodes.nodes, divRef, ]);
+	let members = [papa, mama, bro, me];
+	let relationships = [papa_mama, papa_bro, mama_bro, papa_me, mama_me];
 
+	function ConvertMember2Node (member) {
+		let node = {};
+		node.id = member.id;
+		node.pids = [];
+		node.name = member.surname + ' ' + member.lastname;
+		node.gender = (member.gender === GENDER.MALE) ? 'male' : 'female';
+		node.dob = member.dob;
+		node.dod = member.dod;
+		node.birth_place = member.birth_place;
+		node.current_place = member.current_place;
+		node.is_clan_leader = member.is_clan_leader;
+		node.gen_no = member.gen_no;
+		relationships.forEach((rela) => {
+			if((member.id === rela.main_mem_id) || (member.id === rela.sub_mem_id)) {
+				switch (rela.relate_code) {
+					case RELATIONSHIP.eRELATIONSHIP_KETHON:
+						{
+							if(member.id === rela.main_mem_id) {
+								node.pids.push(rela.sub_mem_id);
+							} else {
+								node.pids.push(rela.main_mem_id);
+							}
+							break;
+						}
+					case RELATIONSHIP.eRELATIONSHIP_BO_CON:
+						{
+							if(member.id === rela.sub_mem_id) {
+								node.fid = rela.main_mem_id;
+							} else {
+								// do nothing
+							}
+							break;
+						}
+					case RELATIONSHIP.eRELATIONSHIP_ME_CON:
+						{
+							if(member.id === rela.sub_mem_id) {
+								node.mid = rela.main_mem_id;
+							} else {
+								// do nothing
+							}
+							break;
+						}
+
+					default:
+						{
+							// do nothing
+							break;
+						}
+				}
+			}
+		});
+		node.img = member.image;
+
+		return node;
+	}
+
+
+	function onClickRender() {
+		// let nodeList = [...nodes];
+		members.forEach((member) => {
+			let node = ConvertMember2Node(member);
+			nodes.push(node);
+		});
+		// setNodes(nodeList);
+	}
+
+	let nodes = [];
+	members.forEach((member) => {
+		let node = ConvertMember2Node(member);
+		nodes.push(node);
+	});
 
 	return (
 		<>
-			<div ref={divRef}></div>
+			<TreeTemplate nodes={nodes} />
+			<button onClick = {onClickRender}>Click me</button>
 		</>
 	);
 }
-
-export default TreeView;

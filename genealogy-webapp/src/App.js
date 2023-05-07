@@ -24,92 +24,40 @@
 
 import {useState, useEffect} from 'react'
 import TreeView from './components/Tree/View';
-// import Draggable from 'react-draggable';
+import TimelineView from './components/Timeline/View';
+import HeaderView from './components/Header/View';
 import './App.css'
 
 export default function App() {
-
 	return (
 		<>
-			<Graph />
+			<HeaderView />
+			<TreeView />
+			<TimelineView/>
 		</>
 	)
 }
 
-function Graph() {
-	const [nodes, setNodes] = useState([					
-		{ id: 1, pids: [2], name: 'Amber McKenzie', gender: 'female', img: 'https://cdn.balkan.app/shared/2.jpg'  },
-		{ id: 2, pids: [1], name: 'Ava Field', gender: 'male', img: 'https://cdn.balkan.app/shared/m30/5.jpg' },
-		{ id: 3, mid: 1, fid: 2, name: 'Peter Stevens', gender: 'male', img: 'https://cdn.balkan.app/shared/m10/2.jpg' },
-		{ id: 4, mid: 1, fid: 2, name: 'Savin Stevens', gender: 'male', img: 'https://cdn.balkan.app/shared/m10/1.jpg'  },
-		{ id: 5, mid: 1, fid: 2, name: 'Emma Stevens', gender: 'female', img: 'https://cdn.balkan.app/shared/w10/3.jpg' },
-	]);  
-
-
-
-	useEffect(() => {
-		function onClickAddMem() {
-			let currentNodes = nodes;
-			let newNode = { id: 6, mid: 1, fid: 2, name: 'Datj', gender: 'female', img: 'https://cdn.balkan.app/shared/w10/3.jpg' };
-			currentNodes.push(newNode);
-			setNodes(currentNodes);
-			console.log(nodes.length);
-		}
-	}, [nodes]);
-	
-	return (
-		<>
-			<div style={{height: '100%'}}>
-				<TreeView nodes={nodes} />
-			</div>
-			<button onClick={onClickAddMem}>{nodes.length}</button>
-		</>
-	);
-}
-
-
-
-// function Tree() {
+// function FamilyTree() {
 // 	return (
 // 		<>
-// 			<Xwrapper>
-// 				<Node id='dat' name='Dat' />
-// 				<Node id='chip' name='Chip' />
-// 				<Node id='son' name='son' />
-
-// 				<Xarrow
-// 					id='dat_chip'
-// 					start='dat'
-// 					end='chip'
-// 					showHead={false}
-// 					showTail={false}
-// 					path='grid'
-// 				/>
-// 				<Xarrow
-// 					start='dat_chip'
-// 					end='son'
-// 					path='grid'
-// 				/>
-// 			</Xwrapper>
-// 		</>
-// 	);
-	
-// }
-
-// function Node({id, name, }) {
-// 	const updateXarrow = useXarrow();
-// 	return (
-// 		<>
-// 			<Draggable  onDrag={updateXarrow} onStop={updateXarrow}>
-// 				<div  className='node_rect'>
-// 					<span id={id} className='node_name'>
-// 						{name}
-// 					</span>
-// 				</div>
-// 			</Draggable>
+// 			<div style={{height: '100%'}}>
+// 				<TreeView />
+// 			</div>
+			
 // 		</>
 // 	);
 // }
+
+// function FamilyEvents() {
+// 	return (
+// 		<>
+// 			<TimelineView />
+// 		</>
+// 	);
+// }
+
+
 
 
 
