@@ -26,7 +26,11 @@ import {useState, useEffect} from 'react'
 import TreeView from './components/Tree/View';
 import TimelineView from './components/Timeline/View';
 import HeaderView from './components/Header/View';
+import GetCat from './components/API/API';
+import axios from 'axios';
+
 import './App.css'
+const URL_BASE = 'https://catfact.ninja/fact';
 
 export default function App() {
 	return (
@@ -34,8 +38,31 @@ export default function App() {
 			<HeaderView />
 			<TreeView />
 			{/* <TimelineView/> */}
+			<GetCatFact />
 		</>
 	)
+}
+
+function GetCatFact() {
+	const [data, setData] = useState({});
+	const [fact, setFact] = useState('');
+	// setFact(GetCat());
+	useEffect(() => {
+		axios.get(URL_BASE)
+		  .then(response => {
+			setData(response.data);
+			setFact(response.data.fact);
+		  })
+		  .catch(error => {
+			console.error(error);
+		  });
+	  }, []);
+
+	return (
+		<div>
+			{fact}
+		</div>
+	);
 }
 
 // function FamilyTree() {

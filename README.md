@@ -9,3 +9,5 @@ Frontend for my Genealogy website
   * npm install @mui/material @emotion/react @emotion/styled *(for dependencies)*
 * primereact: https://primereact.org/installation/
   * npm install primereact`
+* axios: https://www.npmjs.com/package/axios
+  * npm install axios
