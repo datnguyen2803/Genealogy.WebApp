@@ -1,0 +1,10 @@
+export const RESPONSE_CODE_enum = {
+	eRESPONSE_CODE_OK: 0,
+	eRESPONSE_CODE_NOT_FOUND: 1,
+
+}
+
+export const RESPONSE_MESSAGE = {
+	RESPONSE_MESSAGE_OK: "",
+	RESPONSE_MESSAGE_NOT_FOUND: "Resource not found",
+}

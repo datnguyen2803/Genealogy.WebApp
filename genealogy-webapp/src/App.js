@@ -39,24 +39,30 @@ export default function App() {
 			<TreeView />
 			{/* <TimelineView/> */}
 			<GetCatFact />
+			<div>
+				123
+			</div>
 		</>
 	)
 }
 
 function GetCatFact() {
-	const [data, setData] = useState({});
-	const [fact, setFact] = useState('');
+	// const [data, setData] = useState({});
+	// const [fact, setFact] = useState('');
 	// setFact(GetCat());
-	useEffect(() => {
-		axios.get(URL_BASE)
-		  .then(response => {
-			setData(response.data);
-			setFact(response.data.fact);
-		  })
-		  .catch(error => {
-			console.error(error);
-		  });
-	  }, []);
+	// useEffect(() => {
+	// 	axios.get(URL_BASE)
+	// 	  .then(response => {
+	// 		setData(response.data);
+	// 		setFact(response.data.fact);
+	// 	  })
+	// 	  .catch(error => {
+	// 		console.error(error);
+	// 	  });
+	//   }, []);
+	
+	let fact = GetCat();
+	// setFact(catfact);
 
 	return (
 		<div>

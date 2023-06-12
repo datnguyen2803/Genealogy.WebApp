@@ -16,9 +16,10 @@ function Get() {
 		  });
 	  }, []);
   
-	return data.fact;
+	return data;
 }
 
 export default function GetCat() {
-	return Get();
+	let data = Get();
+	return data.fact;
 }

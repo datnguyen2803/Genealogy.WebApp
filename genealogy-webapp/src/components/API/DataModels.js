@@ -1,18 +1,18 @@
-const UserModel = 
-{
-	id: guid,
-	user_name: string,
-	password: string,
-	email: string,
-	role: int,
+// export const UserModel = 
+// {
+// 	id: guid,
+// 	user_name: string,
+// 	password: string,
+// 	email: string,
+// 	role: int,
 
-};
+// };
 
 function Login (user) {	
 	// return bool 
 }
 
-const ServerEvent = 
+export const ServerEvent = 
 {
 	id: guid,
 	actuator: user.id,
@@ -32,7 +32,7 @@ const ServerEvent =
 }
 
 
-const ClanEvent = 
+export const ClanEvent = 
 {
 	id: guid,
 	main_mem_id: member.id,
@@ -45,7 +45,7 @@ const ClanEvent =
 
 }
 
-const MemberTable = 
+export const Member = 
 {
 	id: guid,
 	surname: string,
@@ -62,7 +62,7 @@ const MemberTable =
 	image: string, // url string
 }
 
-const RelationshipTable = 
+export const Relationship = 
 {
 	id: guid,
 	main_mem_id: member.id,
@@ -71,4 +71,21 @@ const RelationshipTable =
 		// e.g: eRELATIONSHIP_ME = 0,
 		// 	 eRELATIONSHIP_CON = 1,
 	date_start: datetime,
+}
+
+export class UserModel {
+	constructor(id, user_name, password, email, role) {
+		this.id = id;
+		this.user_name = user_name;
+		this.password = password;
+		this.email = email;
+		this.role = role;
+	}
+
+	
+	// id: guid,
+	// user_name: string,
+	// password: string,
+	// email: string,
+	// role: int,
 }
