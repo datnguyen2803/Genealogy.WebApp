@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import TreeTemplate from './Template';
+import ButtonAdd from './ButtonAdd';
 
 const GENDER = Object.freeze({
 	MALE: 0,
@@ -226,7 +227,7 @@ export default function TreeView () {
 	return (
 		<>
 			<TreeTemplate nodes={nodes} />
-			<button onClick = {onClickRender}>Click me</button>
+			<ButtonAdd />
 		</>
 	);
 }

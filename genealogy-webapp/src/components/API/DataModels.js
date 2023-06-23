@@ -1,122 +1,57 @@
-// export const UserModel = 
-// {
-// 	id: guid,
-// 	user_name: string,
-// 	password: string,
-// 	email: string,
-// 	role: int,
-
-// };
-
-function Login (user) {	
-	// return bool 
-}
-
-// export const ServerEvent = 
-// {
-// 	id: guid,
-// 	actuator: user.id,
-// 	table_name: int, 
-// 		// UserTable = 0, 
-// 		// ServerEventTable = 1, 
-// 		// ClanEventTable = 2,
-// 		// MemberTable = 3,
-// 		// RelationshipTable = 4
-// 	record_id: int, //id of record affected
-// 	type: id,
-// 		// ADD = 0,
-// 		// EDIT = 1,
-// 		// DELETE = 2
-// 	time_occur: datetime,
-// 	detail: string, // nullable
-// }
-
-
-// export const ClanEvent = 
-// {
-// 	id: guid,
-// 	main_mem_id: member.id,
-// 	sub_mem_id: member.id,
-// 	type: int,
-// 		// e.g: eCLAN_EVENT_MARRY = 0
-// 	time_occur: datetime,
-// 	detail: string, // nullable
-
-
-// }
-
-// export const Member = 
-// {
-// 	id: guid,
-// 	surname: string,
-// 	lastname: string,
-// 	gender: int,
-// 		// MALE = 0,
-// 		// FEMALE = 1
-// 	dob: datetime, // date of birth
-// 	dod: datetime, // date of death, nullable
-// 	birth_place: string,
-// 	current_place: string,
-// 	is_clan_leader: bool, // trưởng họ
-// 	gen_no: int, // đời thứ mấy
-// 	image: string, // url string
-// }
-
-// export const Relationship = 
-// {
-// 	id: guid,
-// 	main_mem_id: member.id,
-// 	sub_mem_id: member.id,
-// 	relate_code: int,
-// 		// e.g: eRELATIONSHIP_ME = 0,
-// 		// 	 eRELATIONSHIP_CON = 1,
-// 	date_start: datetime,
-// }
-
-export class UserModel {
+export class BEUserModel {
 	// TODO: check with WebAPI models
 	/**
 	 * This is a constructor function that creates an object with properties for user ID, username,
 	 * password, email, and role.
-	 * @param id - The unique identifier for the user.
-	 * @param user_name - The username of the user. It is a string value.
-	 * @param password - The password parameter is a string that represents the user's password. It is used
-	 * to authenticate the user and provide access to their account. It should be kept secure and encrypted
-	 * to prevent unauthorized access.
-	 * @param email - The email parameter is a string that represents the email address of the user. It is
-	 * one of the properties of the object being constructed.
-	 * @param role - The "role" parameter is likely used to define the user's role or level of access
-	 * within a system or application. It could be a string or integer value that indicates whether the
-	 * user is an administrator, a regular user, a guest, or some other type of user. The specific roles
-	 * and their
+	 * @param id - The unique identifier for the user. It could be a number or a string.
+	 * @param user_name - The username of the user.
+	 * @param password - The password parameter is a string that represents the user's password. It is one
+	 * of the properties of the object being constructed.
+	 * @param email - The email parameter is a string that represents the email address of a user.
+	 * @param role - The "role" parameter in the constructor is likely referring to the user's role or
+	 * level of access within the system. This could be something like "admin", "moderator", or "user". The
+	 * specific roles and their associated permissions would depend on the requirements of the system being
+	 * built.
 	 */
 	constructor(id, user_name, password, email, role) {
-		this.id = id;
-		this.user_name = user_name;
-		this.password = password;
-		this.email = email;
-		this.role = role;
+		this.mId = id;
+		this.mUserName = user_name;
+		this.mPassword = password;
+		this.mEmail = email;
+		this.mRole = role;
 	}
 
 	// GETTER and SETTER
-	/* These are getter and setter methods for the properties of the UserModel class. They allow access to
-	the private properties of the class from outside the class, while still maintaining encapsulation.
-	The getter methods return the value of the property, while the setter methods set the value of the
-	property to the provided argument. This allows for controlled access to the properties of the class
-	and helps to ensure data integrity. */
-	getId() { return this.id; }
-	setId(id) { this.id = id; }
-	getUserName() { return this.user_name; }
-	setUserName(user_name) { this.user_name = user_name; }
-	getPassword() { return this.password; }
-	setPassword(password) { this.password = password; }
-	getEmail() { return this.email; }
-	setEmail(email) { this.email = email; }
-	getRole() { return this.role; }
-	setRole(role) { this.role = role; }
-
-	// APIs
-	
+	get id() {
+		return this.mId;
+	}
+	set id(value) {
+		this.mId = value;
+	}
+	get userName() {
+		return this.mUserName;
+	}
+	set userName(value) {
+		this.mUserName = value;
+	}
+	get password() {
+		return this.mPassword;
+	}
+	set password(value) {
+		this.mPassword = value;
+	}
+	get email() {
+		return this.mEmail;
+	}
+	set email(value) {
+		this.mEmail = value;
+	}
+	get role() {
+		return this.mRole;
+	}
+	set role(value) {
+		this.mRole = value;
+	}
 
 }
 
@@ -143,23 +78,90 @@ export class ServerEventModel {
 	 * relevant details.
 	 */
 	constructor(id, actuator, table_name, record_id, type, time_occur, detail) {
-		this.id = id;
-		this.actuator = actuator;
-		this.table_name = table_name;
-		this.record_id = record_id;
-		this.type = type;
-		this.time_occur = time_occur;
-		this.detail = detail;
+		this.mId = id;
+		this.mActuator = actuator;
+		this.mTableName = table_name;
+		this.mRecordId = record_id;
+		this.mType = type;
+		this.mTimeOccur = time_occur;
+		this.mDetail = detail;
 	}
 
-	// TODO: GETTER and SETTER
+	//   GETTER and SETTER
+	get id() {
+		return this.mId;
+	}
 
-	// TODO: APIs
+	set id(value) {
+		this.mId = value;
+	}
+
+	get actuator() {
+		return this.mActuator;
+	}
+
+	set actuator(value) {
+		this.mActuator = value;
+	}
+
+	get tableName() {
+		return this.mTableName;
+	}
+
+	set tableName(value) {
+		this.mTableName = value;
+	}
+
+	get recordId() {
+		return this.mRecordId;
+	}
+
+	set recordId(value) {
+		this.mRecordId = value;
+	}
+
+	get type() {
+		return this.mType;
+	}
+
+	set type(value) {
+		this.mType = value;
+	}
+
+	get timeOccur() {
+		return this.mTimeOccur;
+	}
+
+	set timeOccur(value) {
+		this.mTimeOccur = value;
+	}
+
+	get detail() {
+		return this.mDetail;
+	}
+
+	set detail(value) {
+		this.mDetail = value;
+	}
 
 }
 
-export class MemberModel {
-	// TODO: check with WebAPI models
+
+export class FEMemberModel {
+	constructor(surname, lastname, gender, dob, dod, birth_place, current_place, is_clan_leader, gen_no, image) {
+		this.mSurname = surname;
+		this.mLastname = lastname;
+		this.mGender = gender;
+		this.mDob = dob;
+		this.mDod = dod;
+		this.mBirthPlace = birth_place;
+		this.mCurrentPlace = current_place;
+		this.mIsClanLeader = is_clan_leader;
+		this.mGenNo = gen_no;
+		this.mImage = image;
+	}
+}
+export class BEMemberModel {
 	/**
 	 * This is a constructor function that creates an object with properties for a person's information
 	 * such as name, gender, date of birth, and image.
@@ -181,28 +183,111 @@ export class MemberModel {
 	 * picture or avatar. It can be a URL or a file path to the image file.
 	 */
 	constructor(id, surname, lastname, gender, dob, dod, birth_place, current_place, is_clan_leader, gen_no, image) {
-		this.id = id;
-		this.surname = surname;
-		this.lastname = lastname;
-		this.gender = gender;
-		this.dob = dob;
-		this.dod = dod;
-		this.birth_place = birth_place;
-		this.current_place = current_place;
-		this.is_clan_leader = is_clan_leader;
-		this.gen_no = gen_no;
-		this.image = image;
+		this.mId = id;
+		this.mSurname = surname;
+		this.mLastname = lastname;
+		this.mGender = gender;
+		this.mDob = dob;
+		this.mDod = dod;
+		this.mBirthPlace = birth_place;
+		this.mCurrentPlace = current_place;
+		this.mIsClanLeader = is_clan_leader;
+		this.mGenNo = gen_no;
+		this.mImage = image;
 	}
 
-	// TODO: GETTER and SETTER
 
-	// TODO: APIs
+	// GETTER and SETTER
+	get id() {
+		return this.mId;
+	}
 
+	set id(value) {
+		this.mId = value;
+	}
+
+	get surname() {
+		return this.mSurname;
+	}
+
+	set surname(value) {
+		this.mSurname = value;
+	}
+
+	get lastname() {
+		return this.mLastname;
+	}
+
+	set lastname(value) {
+		this.mLastname = value;
+	}
+
+	get gender() {
+		return this.mGender;
+	}
+
+	set gender(value) {
+		this.mGender = value;
+	}
+
+	get dob() {
+		return this.mDob;
+	}
+
+	set dob(value) {
+		this.mDob = value;
+	}
+
+	get dod() {
+		return this.mDod;
+	}
+
+	set dod(value) {
+		this.mDod = value;
+	}
+
+	get birthPlace() {
+		return this.mBirthPlace;
+	}
+
+	set birthPlace(value) {
+		this.mBirthPlace = value;
+	}
+
+	get currentPlace() {
+		return this.mCurrentPlace;
+	}
+
+	set currentPlace(value) {
+		this.mCurrentPlace = value;
+	}
+
+	get isClanLeader() {
+		return this.mIsClanLeader;
+	}
+
+	set isClanLeader(value) {
+		this.mIsClanLeader = value;
+	}
+
+	get genNo() {
+		return this.mGenNo;
+	}
+
+	set genNo(value) {
+		this.mGenNo = value;
+	}
+
+	get image() {
+		return this.mImage;
+	}
+
+	set image(value) {
+		this.mImage = value;
+	}
 }
 
 export class RelationshipModel {
-	// TODO: check with WebAPI models
-
 	/**
 	 * This is a constructor function that initializes an object with five properties.
 	 * @param id - an identifier for the relationship object
@@ -217,22 +302,55 @@ export class RelationshipModel {
 	 * between two members. It is likely a date object or a string that can be parsed into a date object.
 	 */
 	constructor(id, main_mem_id, sub_mem_id, relate_code, date_start) {
-		this.id = id;
-		this.main_mem_id = main_mem_id;
-		this.sub_mem_id = sub_mem_id;
-		this.relate_code = relate_code;
-		this.date_start = date_start;
+		this.mId = id;
+		this.mMainMemId = main_mem_id;
+		this.mSubMemId = sub_mem_id;
+		this.mRelateCode = relate_code;
+		this.mDateStart = date_start;
 	}
 
-	// TODO: GETTER and SETTER
+	get id() {
+		return this.mId;
+	}
 
-	// TODO: APIs
+	set id(value) {
+		this.mId = value;
+	}
 
+	get mainMemId() {
+		return this.mMainMemId;
+	}
+
+	set mainMemId(value) {
+		this.mMainMemId = value;
+	}
+
+	get subMemId() {
+		return this.mSubMemId;
+	}
+
+	set subMemId(value) {
+		this.mSubMemId = value;
+	}
+
+	get relateCode() {
+		return this.mRelateCode;
+	}
+
+	set relateCode(value) {
+		this.mRelateCode = value;
+	}
+
+	get dateStart() {
+		return this.mDateStart;
+	}
+
+	set dateStart(value) {
+		this.mDateStart = value;
+	}
 }
 
 export class ClanEventModel {
-	// TODO: check with WebAPI models
-
 	/**
 	 * This is a constructor function that initializes properties for an object representing an event.
 	 * @param id - This is the unique identifier for the object being constructed. It could be a number or
@@ -255,16 +373,59 @@ export class ClanEventModel {
 	 * event, notes about the object's properties or behavior, or any other relevant information.
 	 */
 	constructor(id, main_mem_id, sub_mem_id, type, time_occur, detail) {
-		this.id = id;
-		this.main_mem_id = main_mem_id;
-		this.sub_mem_id = sub_mem_id;
-		this.type = type;
-		this.time_occur = time_occur;
-		this.detail = detail;
+		this.mId = id;
+		this.mMainMemId = main_mem_id;
+		this.mSubMemId = sub_mem_id;
+		this.mType = type;
+		this.mTimeOccur = time_occur;
+		this.mDetail = detail;
 	}
 
-	// TODO: GETTER and SETTER
+	get id() {
+		return this.mId;
+	}
 
-	// TODO: APIs
+	set id(value) {
+		this.mId = value;
+	}
 
+	get mainMemId() {
+		return this.mMainMemId;
+	}
+
+	set mainMemId(value) {
+		this.mMainMemId = value;
+	}
+
+	get subMemId() {
+		return this.mSubMemId;
+	}
+
+	set subMemId(value) {
+		this.mSubMemId = value;
+	}
+
+	get type() {
+		return this.mType;
+	}
+
+	set type(value) {
+		this.mType = value;
+	}
+
+	get timeOccur() {
+		return this.mTimeOccur;
+	}
+
+	set timeOccur(value) {
+		this.mTimeOccur = value;
+	}
+
+	get detail() {
+		return this.mDetail;
+	}
+
+	set detail(value) {
+		this.mDetail = value;
+	}
 }
