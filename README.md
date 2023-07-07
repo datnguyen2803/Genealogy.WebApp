@@ -7,6 +7,8 @@ Frontend for my Genealogy website
 * @mui/lab/Timeline: https://mui.com/material-ui/react-timeline/
   * npm install @mui/lab
   * npm install @mui/material @emotion/react @emotion/styled *(for dependencies)*
+  * npm install @mui/x-date-pickers
+  * npm install dayjs --save ---> to fix error: Can't resolve 'dayjs' in '..\AdapterDayjs'
 * primereact: https://primereact.org/installation/
   * npm install primereact`
 * axios: https://www.npmjs.com/package/axios

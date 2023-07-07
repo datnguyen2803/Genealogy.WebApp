@@ -1,6 +1,6 @@
 .form-add-member {
 	position: fixed;
-	z-index: 9999;
+	z-index: 1;
 	top: 0;
 	left: 0;
 	width: 100%;
@@ -18,9 +18,9 @@
 
 .form-add-member-content {
 	background-color: #fff;
-	width: 400px;
+	width: 500px;
 	height: 100%;
-	padding: 20px;
+	padding: 30px;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
@@ -51,7 +51,7 @@
 	flex-direction: column;
 	gap: 10px;
 	max-width: 350px;
-	background-color: #fff;
+	background-color: #23c483;
 	padding: 20px;
 	border-radius: 20px;
 	position: relative;

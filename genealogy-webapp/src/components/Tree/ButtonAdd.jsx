@@ -11,7 +11,7 @@ export default function ButtonAdd() {
 	};
 	return (
 		<>
-			<button onClick={handleClick}>Thêm thành viên</button>
+			<button className="button-add" onClick={handleClick}>Thêm thành viên</button>
 			{showForm && <FormAddMember onClose={() => setShowForm(false)} />}
 		</>
 	);
