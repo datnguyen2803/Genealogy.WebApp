@@ -1,6 +1,12 @@
 import {CallAPI} from './API';
 import * as APIConstant from './Constant';
 
+export const RELATIONSHIP_enum = {
+	MARRIED: 0,
+	PARENT_CHILD: 1,
+
+}
+
 export function GetAll() {
 	let body = {};
 	let retVal = {};

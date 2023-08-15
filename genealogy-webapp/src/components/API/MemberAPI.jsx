@@ -1,6 +1,11 @@
 import {CallAPI} from './API';
 import * as APIConstant from './Constant';
 
+export const MEMBER_GENDER_enum = {
+	MALE: 0,
+	FEMALE: 1,
+}
+
 export function GetAll() {
 	let body = {};
 	let retVal = {};

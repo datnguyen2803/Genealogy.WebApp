@@ -9,7 +9,6 @@ export const RESPONSE_CODE_enum = {
 export const MEMBER_GENDER_enum = {
 	eMEMBER_GENDER_MALE: 0,
 	eMEMBER_GENDER_FEMALE: 1,
-
 }
 
 
