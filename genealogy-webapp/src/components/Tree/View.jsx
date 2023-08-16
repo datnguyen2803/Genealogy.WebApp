@@ -13,27 +13,27 @@ function MapDataToGraph(nodes, memberList, relationshipList) {
 		node.gender = (member.gender === MemberAPI.MEMBER_GENDER_enum.MALE) ? 'male' : 'female';
 		node.dob = member.dob;
 		node.dod = member.dod;
-		node.birth_place = member.birth_place;
-		node.current_place = member.current_place;
-		node.is_clan_leader = member.is_clan_leader;
-		node.gen_no = member.gen_no;
+		node.birth_place = member.birthPlace;
+		node.current_place = member.currentPlace;
+		node.is_clan_leader = member.isClanLeader;
+		node.gen_no = member.genNo;
 		relationshipList.forEach((rela) => {
-			if((member.id === rela.sub_mem_id)) {
+			if((member.id === rela.subMemId)) {
 				let mainMem = memberList.find(mainMember => {
-					return mainMember.id === rela.main_mem_id;
+					return mainMember.id === rela.mainMemId;
 				})
-				switch (rela.relate_code) {
+				switch (rela.relateCode) {
 					case RelaAPI.RELATIONSHIP_enum.MARRIED:
 						{
-							node.pids.push(rela.main_mem_id);
+							node.pids.push(rela.mainMemId);
 							break;
 						}
 					case RelaAPI.RELATIONSHIP_enum.PARENT_CHILD:
 						{
 							if(mainMem.gender === MemberAPI.MEMBER_GENDER_enum.MALE) {
-								node.fid = rela.main_mem_id;
+								node.fid = rela.mainMemId;
 							} else {
-								node.mid = rela.main_mem_id;
+								node.mid = rela.mainMemId;
 							}
 							break;
 						}
@@ -195,7 +195,9 @@ export default function TreeView () {
 	// }
 
 	let nodes = [];
-	MapDataToGraph(nodes, members, relationships);
+	let myMems = MemberAPI.GetAll();
+	let myRelation = RelaAPI.GetAll();
+	MapDataToGraph(nodes, myMems, myRelation);
 
 	return (
 		<>

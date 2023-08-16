@@ -1,4 +1,4 @@
-export const URL_BASE = 'https://catfact.ninja/fact';
+export const URL_BASE = 'https://localhost:2803/api';
 
 export const RESPONSE_CODE_enum = {
 	eRESPONSE_CODE_OK: 0,
@@ -6,10 +6,6 @@ export const RESPONSE_CODE_enum = {
 
 }
 
-export const MEMBER_GENDER_enum = {
-	eMEMBER_GENDER_MALE: 0,
-	eMEMBER_GENDER_FEMALE: 1,
-}
 
 
 export const CONTROLLERS = {
@@ -17,11 +13,11 @@ export const CONTROLLERS = {
 
 	TEST_CAT_FACT: "",
 
-	USER: "user",
-	SERVER_EVENT: "serverevent",
-	MEMBER: "member",
-	RELATIONSHIP: "relationship",
-	CLAN_EVENT: "clanevent",
+	USER: "User",
+	SERVER_EVENT: "ServerEvent",
+	MEMBER: "Member",
+	RELATIONSHIP: "Relationship",
+	CLAN_EVENT: "ClanEvent",
 }
 
 export const ACTIONS = {

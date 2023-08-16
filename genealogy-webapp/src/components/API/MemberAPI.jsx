@@ -8,14 +8,18 @@ export const MEMBER_GENDER_enum = {
 
 export function GetAll() {
 	let body = {};
-	let retVal = {};
-	let response = CallAPI(APIConstant.CONTROLLERS.MEMBER, APIConstant.ACTIONS.USER_LOGIN, body);
+	let retVal = [];
+	let response = CallAPI(APIConstant.CONTROLLERS.MEMBER, APIConstant.ACTIONS.MEMBER_GET_ALL, body);
 
-	if(response.Code === APIConstant.RESPONSE_CODE_enum.eRESPONSE_CODE_OK) {
-		retVal = response.Data;
-	} else {
-		console.error(response.Message);
-	}
+	// if(response.Code === APIConstant.RESPONSE_CODE_enum.eRESPONSE_CODE_OK) {
+	// 	retVal = response.Data;
+	// } else {
+	// 	console.error(response.Message);
+	// }
+	if (Array.isArray(response)) {
+		retVal = response;
+	  }
+	// console.log(retVal);
 	return retVal;
 }
 
