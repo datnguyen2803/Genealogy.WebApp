@@ -23,6 +23,21 @@ export function GetAll() {
 	return retVal;
 }
 
+export function GetByFeatures( surname, lastname, gender, child_order, gen_no, note) {
+	let body = {
+		Surname: surname,
+		Lastname: lastname,
+		Gender: gender,
+		ChildOrder: child_order,
+		GenNo: gen_no,
+		Note: note
+	};
+	let retVal = {};
+	let response = CallAPI(APIConstant.CONTROLLERS.MEMBER, APIConstant.ACTIONS.MEMBER_GET_BY_FEATURES, body);
+	retVal = response.Data;
+	return retVal;
+}
+
 export function GetLeader() {
 	let body = {};
 	let retVal = {};
@@ -89,15 +104,18 @@ export function FilterByGen(gen_no) {
 }
 
 export function Add(new_mem) {
-	let body = new_mem;
-	let response = CallAPI(APIConstant.CONTROLLERS.MEMBER, APIConstant.ACTIONS.MEMBER_ADD, body);
+	const handleAdd = (new_mem) => {
+		let body = new_mem;
+		let response = CallAPI(APIConstant.CONTROLLERS.MEMBER, APIConstant.ACTIONS.MEMBER_ADD, body);
 
-	if(response.Code === APIConstant.RESPONSE_CODE_enum.eRESPONSE_CODE_OK) {
-		return true;
-	} else {
-		console.error(response.Message);
-		return false;
+		if(response.Code === APIConstant.RESPONSE_CODE_enum.eRESPONSE_CODE_OK) {
+			return true;
+		} else {
+			console.error(response.Message);
+			return false;
+		}
 	}
+	return handleAdd(new_mem);
 }
 
 export function Edit(edit_mem) {

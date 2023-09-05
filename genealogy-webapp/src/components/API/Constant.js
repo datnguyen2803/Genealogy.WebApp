@@ -36,6 +36,7 @@ export const ACTIONS = {
 	SERVER_EVENT_DELETE: "delete",
 
 	MEMBER_GET_ALL: "GetAll",
+	MEMBER_GET_BY_FEATURES: "GetByFeatures",
 	MEMBER_GET_LEADER: "GetLeader",
 	MEMBER_SEARCH_BY_NAME: "SearchByName",
 	MEMBER_FILTER_BY_GENDER: "FilterByGender",

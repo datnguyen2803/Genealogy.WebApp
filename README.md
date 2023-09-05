@@ -13,3 +13,5 @@ Frontend for my Genealogy website
   * npm install primereact`
 * axios: https://www.npmjs.com/package/axios
   * npm install axios
+* date-fns: to get date before January 1, 1970
+  * npm install date-fns

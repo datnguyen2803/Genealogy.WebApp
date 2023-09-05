@@ -25,6 +25,7 @@ export function CallAPI(controller, action, body) {
 			'content-type': 'application/json',
 		},
 		data: body,
+		timeout: 1000
 
 	};
 
@@ -35,6 +36,7 @@ export function CallAPI(controller, action, body) {
 		case APIConstant.ACTIONS.SERVER_EVENT_FILTER_BY_TABLE:
 		case APIConstant.ACTIONS.SERVER_EVENT_FILTER_BY_TIME:
 		case APIConstant.ACTIONS.MEMBER_GET_ALL:
+		case APIConstant.ACTIONS.MEMBER_GET_BY_FEATURES:
 		case APIConstant.ACTIONS.MEMBER_GET_LEADER:
 		case APIConstant.ACTIONS.MEMBER_SEARCH_BY_NAME:
 		case APIConstant.ACTIONS.MEMBER_FILTER_BY_GENDER:
@@ -54,6 +56,7 @@ export function CallAPI(controller, action, body) {
 			}
 
 		case APIConstant.ACTIONS.USER_SIGN_UP:
+		case APIConstant.ACTIONS.MEMBER_ADD:
 		case APIConstant.ACTIONS.SERVER_EVENT_ADD:
 		case APIConstant.ACTIONS.CLAN_EVENT_ADD:
 		case APIConstant.ACTIONS.RELATIONSHIP_ADD:
