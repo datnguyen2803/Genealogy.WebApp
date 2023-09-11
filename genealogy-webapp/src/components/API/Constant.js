@@ -42,7 +42,7 @@ export const ACTIONS = {
 	MEMBER_FILTER_BY_GENDER: "FilterByGender",
 	MEMBER_FILTER_BY_PLACE: "FilterByPlace",
 	MEMBER_FILTER_BY_GEN: "FilterByGen",
-	MEMBER_ADD: "new",
+	MEMBER_ADD: "Add",
 	MEMBER_EDIT: "edit",
 	MEMBER_DELETE: "delete",
 
@@ -58,7 +58,7 @@ export const ACTIONS = {
 	RELATIONSHIP_FILTER_BY_MEM: "FilterByMem",
 	RELATIONSHIP_FILTER_BY_RELATIONSHIP: "FilterByRelationship",
 	RELATIONSHIP_FILTER_BY_MEM_AND_RELATE: "FilterByMemAndRelate",
-	RELATIONSHIP_ADD: "new",
+	RELATIONSHIP_ADD: "Add",
 	RELATIONSHIP_EDIT: "edit",
 	RELATIONSHIP_DELETE: "delete",
 

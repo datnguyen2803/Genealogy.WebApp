@@ -35,24 +35,10 @@ export default function App() {
 			<HeaderView />
 			<TreeView />
 			{/* <TimelineView/> */}
-			<GetCatFact />
-			<div>
-				123
-			</div>
 		</>
 	)
 }
 
-function GetCatFact() {
-	
-	let fact = GetCat();
-
-	return (
-		<div>
-			{fact}
-		</div>
-	);
-}
 
 
 

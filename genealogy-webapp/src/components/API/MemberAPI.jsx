@@ -1,4 +1,5 @@
-import {CallAPI} from './API';
+import { useCallback } from 'react';
+import {CallAPI, useCallAPI} from './API';
 import * as APIConstant from './Constant';
 
 export const MEMBER_GENDER_enum = {
@@ -104,18 +105,15 @@ export function FilterByGen(gen_no) {
 }
 
 export function Add(new_mem) {
-	const handleAdd = (new_mem) => {
-		let body = new_mem;
-		let response = CallAPI(APIConstant.CONTROLLERS.MEMBER, APIConstant.ACTIONS.MEMBER_ADD, body);
+	let body = new_mem;
+	let response = CallAPI(APIConstant.CONTROLLERS.MEMBER, APIConstant.ACTIONS.MEMBER_ADD, body);
 
-		if(response.Code === APIConstant.RESPONSE_CODE_enum.eRESPONSE_CODE_OK) {
-			return true;
-		} else {
-			console.error(response.Message);
-			return false;
-		}
+	if(response.Code === APIConstant.RESPONSE_CODE_enum.eRESPONSE_CODE_OK) {
+		return true;
+	} else {
+		console.error(response.Message);
+		return false;
 	}
-	return handleAdd(new_mem);
 }
 
 export function Edit(edit_mem) {

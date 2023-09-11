@@ -7,9 +7,11 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { parseISO, format } from 'date-fns';
+import axios from 'axios';
 import * as MemberAPI from '../API/MemberAPI';
 import * as RelaAPI from '../API/RelationshipAPI';
 import { useEffect } from 'react';
+import * as APIConstant from '../API/Constant';
 
 
 export default function FormAddMember(props) {
@@ -30,10 +32,109 @@ export default function FormAddMember(props) {
 		note: "",
 		fid: "",
 		mid: "",
+		pid: ""
 	});
 
-	var memberList = MemberAPI.GetAll();
+
+	const [addMemberResponse, setAddMemberResponse] = useState({});
+	const [getMemberResponse, setGetMemberResponse] = useState({});
+	const [addRelaResponse, setAddRelaResponse] = useState({});
+
+	// var memberList = MemberAPI.GetAll();
+	const [getAllResponse, setGetAllResponse] = useState([]);
+	useEffect(() => {
+		getAllMember();
+	}, []);
+	var memberList = getAllResponse;
 	console.log(memberList);
+
+	async function getAllMember() {
+		let apiUrl = 'https://localhost:2803/api' + '/' + APIConstant.CONTROLLERS.MEMBER + '/' + APIConstant.ACTIONS.MEMBER_GET_ALL;
+		let options = {
+			method: "GET",
+			url: apiUrl,
+			headers: {
+				'content-type': 'application/json',
+			},
+			timeout: 1000
+
+		};
+		await axios.request(options)
+			.then(response => {
+				if (Array.isArray(response.data)) {
+					setGetAllResponse(response.data);
+				}
+
+			})
+			.catch(error => {
+				console.error(error)
+			});
+	}
+
+	async function addMember(member) {
+		let apiUrl = 'https://localhost:2803/api' + '/' + APIConstant.CONTROLLERS.MEMBER + '/' + APIConstant.ACTIONS.MEMBER_ADD;
+		let options = {
+			method: "POST",
+			url: apiUrl,
+			headers: {
+				'content-type': 'application/json',
+			},
+			data: member,
+			// timeout: 1000
+
+		};
+		await axios.request(options)
+			.then(response => {
+				setAddMemberResponse(response.data);
+			})
+			.catch(error => {
+				console.error(error)
+			});
+	}
+
+	async function getMemberByFeatures(features) {
+		let body = features;
+
+		let apiUrl = 'https://localhost:2803/api' + '/' + APIConstant.CONTROLLERS.MEMBER + '/' + APIConstant.ACTIONS.MEMBER_GET_BY_FEATURES;
+		let options = {
+			method: "POST",
+			url: apiUrl,
+			headers: {
+				'content-type': 'application/json',
+			},
+			data: body,
+			// timeout: 1000
+
+		};
+		await axios.request(options)
+			.then(response => {
+				setGetMemberResponse(response.data);
+			})
+			.catch(error => {
+				console.error(error)
+			});
+	}
+
+	async function addRela(relation) {
+		let apiUrl = 'https://localhost:2803/api' + '/' + APIConstant.CONTROLLERS.RELATIONSHIP + '/' + APIConstant.ACTIONS.RELATIONSHIP_ADD;
+		let options = {
+			method: "POST",
+			url: apiUrl,
+			headers: {
+				'content-type': 'application/json',
+			},
+			data: relation,
+			// timeout: 1000
+
+		};
+		await axios.request(options)
+			.then(response => {
+				setAddRelaResponse(response.data);
+			})
+			.catch(error => {
+				console.error(error)
+			});
+	}
 
 	const handleChange = (e) => {
 		const { name, value } = e.target;
@@ -45,40 +146,140 @@ export default function FormAddMember(props) {
 		console.log(formData);
 	}
 
-	const handlePidsChange = (e) => {
-		const { name, value } = e.target;
-		var tempPartnerIds = [...partnerIds];
-		tempPartnerIds.push(value);
-		setPartnerIds(tempPartnerIds);
-		console.log(" --->" + name + " : " + value);
-		console.log(partnerIds)
-	}
+	// const handlePidsChange = (e) => {
+	// 	const { name, value } = e.target;
+	// 	var tempPartnerIds = [...partnerIds];
+	// 	tempPartnerIds.push(value);
+	// 	setPartnerIds(tempPartnerIds);
+	// 	console.log(" --->" + name + " : " + value);
+	// 	console.log(partnerIds)
+	// }
 
-	const handleButtonClick = (e) => {
+	const handleButtonClick = async (e) => {
 		e.preventDefault();
 		console.log(formData);
 		console.log("dob: " + dob);
 		console.log("dod: " + dod);
 		console.log("pids: " + partnerIds);
-	
+
 		var member = {
 			surname: formData.surname,
 			lastname: formData.lastname,
-			gender: formData.lastname,
+			gender: formData.gender === "female" ? 1 : 0,
 			dob: dob,
 			dod: dod,
 			birthPlace: formData.birthPlace,
 			currentPlace: formData.currentPlace,
-			childOrder: formData.childOrder,
-			genNo: formData.genNo,
-			isClanLeader: formData.isClanLeader,
+			childOrder: formData.childOrder !== "" ? parseInt(formData.childOrder, 10) : 0,
+			genNo: formData.genNo !== "" ? parseInt(formData.genNo, 10) : 0,
+			isClanLeader: formData.isClanLeader === "true" ? true : false,
 			note: formData.note,
 			image: ""
 		}
-		MemberAPI.Add(member);
-	  };
+		console.log(member);
+		addMember(member);
 
-	const SelectMenu = ({ type, inputList }) => {
+		await new Promise(resolve => setTimeout(resolve, 2000));
+		let features = {
+			surname: member.surname,
+			lastname: member.lastname,
+			gender: member.gender,
+			childOrder: member.childOrder,
+			genNo: member.genNo,
+			note: member.note
+		}
+		console.log(features);
+		await getMemberByFeatures(features);
+		// await new Promise(resolve => setTimeout(resolve, 5000));
+		// add relationship
+		// var newRela = {}
+		// if (formData.fid !== "") {
+		// 	// console.log()
+		// 	newRela = {
+		// 		MainMemId: formData.fid,
+		// 		SubMemId: getMemberResponse.id,
+		// 		RelateCode: RelaAPI.RELATIONSHIP_enum.PARENT_CHILD,
+		// 		DateStart: formData.dob
+		// 	}
+		// 	console.log(newRela);
+		// 	await addRela(newRela)
+		// }
+		// if (formData.mid !== "") {
+		// 	newRela = {
+		// 		MainMemId: formData.mid,
+		// 		SubMemId: getMemberResponse.id,
+		// 		RelateCode: RelaAPI.RELATIONSHIP_enum.PARENT_CHILD,
+		// 		DateStart: formData.dob
+		// 	}
+		// 	console.log(newRela);
+		// 	await addRela(newRela)
+		// }
+		// if (partnerIds !== null) {
+		// 	partnerIds.forEach(partnerId => {
+		// 		newRela = {
+		// 			MainMemId: partnerId,
+		// 			SubMemId: getMemberResponse.id,
+		// 			RelateCode: RelaAPI.RELATIONSHIP_enum.MARRIED,
+		// 			DateStart: ""
+		// 		}
+		// 		console.log(newRela);
+		// 		addRela(newRela)
+		// 	})
+		// }
+	};
+
+	useEffect(() => {
+		console.log(getAllResponse);
+	}, [getAllResponse]);
+	useEffect(() => {
+		console.log(addMemberResponse);
+	}, [addMemberResponse]);
+	useEffect(() => {
+		console.log(getMemberResponse);
+		var newRela = {}
+		if (formData.fid !== "") {
+			newRela = {
+				MainMemId: formData.fid,
+				SubMemId: getMemberResponse.id,
+				RelateCode: RelaAPI.RELATIONSHIP_enum.PARENT_CHILD,
+				DateStart: dob === null ? "" : dob,
+			}
+			console.log(newRela);
+			addRela(newRela)
+		}
+		if (formData.mid !== "") {
+			newRela = {
+				MainMemId: formData.mid,
+				SubMemId: getMemberResponse.id,
+				RelateCode: RelaAPI.RELATIONSHIP_enum.PARENT_CHILD,
+				DateStart: dob === null ? "" : dob
+			}
+			console.log(newRela);
+			addRela(newRela)
+		}
+		if (formData.pid !== "") {
+			newRela = {
+				MainMemId: formData.pid,
+				SubMemId: getMemberResponse.id,
+				RelateCode: RelaAPI.RELATIONSHIP_enum.MARRIED,
+				DateStart: ""
+			}
+			console.log(newRela);
+			addRela(newRela)
+			newRela = {
+				MainMemId: getMemberResponse.id,
+				SubMemId: formData.pid,
+				RelateCode: RelaAPI.RELATIONSHIP_enum.MARRIED,
+				DateStart: ""
+			}
+			addRela(newRela)
+		}
+	}, [getMemberResponse]);
+	useEffect(() => {
+		console.log(addRelaResponse);
+	}, [addRelaResponse]);
+
+	const SelectMenu = ({ id, type, inputList }) => {
 		var renderList = [...inputList];
 
 		renderList.forEach(member => {
@@ -148,7 +349,7 @@ export default function FormAddMember(props) {
 		} else {
 			return (
 				<>
-					<select id="selectType" name={type} onChange={handlePidsChange}>
+					<select id="selectType" name={type} value={formData.pid} onChange={handleChange}>
 						<option value={""}>
 							Không rõ
 						</option>
@@ -183,18 +384,6 @@ export default function FormAddMember(props) {
 						</label>
 					</div>
 
-					{/* <FormControl>
-						<FormLabel id="form-gender" name="gender" required={true} >Giới tính</FormLabel>
-						<RadioGroup
-							row
-							aria-labelledby="form-gender"
-							name="gender"
-							onChange={handleChange}
-						>
-							<FormControlLabel value="male" control={<Radio />} label="Nam" />
-							<FormControlLabel value="female" control={<Radio />} label="Nữ" />
-						</RadioGroup>
-					</FormControl> */}
 					<div>
 						<label>
 							<input type="radio" name="gender" value="male" onChange={handleChange} />
@@ -213,7 +402,7 @@ export default function FormAddMember(props) {
 							format="DD/MM/YYYY"
 							name="dob"
 							onChange={date => {
-								var formated = DateModify(date);
+								var formated = DateModify(date) + "T00:00:00";
 								setDob(formated);
 								console.log(" ---> dob : " + formated);
 							}}
@@ -226,7 +415,7 @@ export default function FormAddMember(props) {
 							format="DD/MM/YYYY"
 							name="dob"
 							onChange={date => {
-								var formated = DateModify(date);
+								var formated = DateModify(date) + "T00:00:00";
 								setDod(formated);
 								console.log(" ---> dod : " + formated);
 							}}
@@ -276,33 +465,22 @@ export default function FormAddMember(props) {
 						<input name="note" required={false} placeholder="Ghi chú" type="text" className="input" onChange={handleChange} />
 					</label>
 
-					{/* <label htmlFor="mid">Mẹ:</label>
-					<select name="mid" onChange={handleChange}>
-						{
-							memberList.forEach((member) => {
-								<option value={member.id}>
-								{member.surname + member.lastname}
-								</option>
-							})
-						}
-					</select> */}
-
 					<div className='flex'>
 						<label htmlFor="selectFather">Bố: </label>
 						<SelectMenu id="selectFather" type="fid" inputList={memberList} />
 					</div>
 					<div className='flex'>
-						<label htmlFor="selectFather">Mẹ: </label>
-						<SelectMenu id="selectFather" type="mid" inputList={memberList} />
+						<label htmlFor="selectMother">Mẹ: </label>
+						<SelectMenu id="selectMother" type="mid" inputList={memberList} />
 					</div>
 					<div className='flex'>
-						<label htmlFor="selectFather">Vợ/Chồng 1: </label>
-						<SelectMenu id="selectFather" type="pids" inputList={memberList} />
+						<label htmlFor="selectPartner1">Vợ/Chồng: </label>
+						<SelectMenu id="selectPartner1" type="pid" inputList={memberList} />
 					</div>
-					<div className='flex'>
-						<label htmlFor="selectFather">Vợ/Chồng 2: </label>
-						<SelectMenu id="selectFather" type="pids" inputList={memberList} />
-					</div>
+					{/* <div className='flex'>
+						<label htmlFor="selectPartner2">Vợ/Chồng 2: </label>
+						<SelectMenu id="selectPartner2" type="pids" inputList={memberList} />
+					</div> */}
 
 
 					<button className="submit" onClick={handleButtonClick}>Thêm</button>
@@ -313,111 +491,24 @@ export default function FormAddMember(props) {
 	);
 }
 
-function BasicDatePicker({ label, helper }) {
+// function BasicDatePicker({ label, helper }) {
 
-	return (
-		<LocalizationProvider dateAdapter={AdapterDayjs}>
-			<DatePicker
-				label={label}
-				defaultValue={dayjs('1900-01-01')}
-				format="DD/MM/YYYY"
-			/>
-		</LocalizationProvider>
-	);
-}
+// 	return (
+// 		<LocalizationProvider dateAdapter={AdapterDayjs}>
+// 			<DatePicker
+// 				label={label}
+// 				defaultValue={dayjs('1900-01-01')}
+// 				format="DD/MM/YYYY"
+// 			/>
+// 		</LocalizationProvider>
+// 	);
+// }
 
 function DateModify(_date) {
 	if (_date) {
-		const formattedDate = format(parseISO(_date.toISOString()), 'dd/MM/yyyy');
+		const formattedDate = format(parseISO(_date.toISOString()), 'yyyy-MM-dd');
 		console.log('Selected date:', formattedDate);
 		return formattedDate;
 	}
 	return "";
-}
-
-// function RadioForm() {
-// 	// Initialize state to store the selected gender
-// 	const [gender, setGender] = useState('');
-
-// 	// Handle change event for radio buttons
-// 	const handleGenderChange = (event) => {
-// 		setGender(event.target.value);
-// 	}
-
-// 	return (
-// 		<div>
-// 			<label>Đích tôn: </label>
-// 			<div id="gender">
-// 				<input type="radio" id="male" name="gender" value="male" checked={gender === 'male'} onChange={handleGenderChange} />
-// 				<label htmlFor="male">Đúng</label>
-// 				<input type="radio" id="female" name="gender" value="female" checked={gender === 'female'} onChange={handleGenderChange} />
-// 				<label htmlFor="female">Sai</label>
-// 			</div>
-// 		</div>
-// 	);
-// }
-
-const handleSubmit = async (e, formData, dob, dod, partnerIds) => {
-	e.preventDefault();
-	console.log(formData);
-	console.log("dob: " + dob);
-	console.log("dod: " + dod);
-	console.log("pids: " + partnerIds);
-
-	var member = {
-		surname: formData.surname,
-		lastname: formData.lastname,
-		gender: formData.lastname,
-		dob: dob,
-		dod: dod,
-		birthPlace: formData.birthPlace,
-		currentPlace: formData.currentPlace,
-		childOrder: formData.childOrder,
-		genNo: formData.genNo,
-		isClanLeader: formData.isClanLeader,
-		note: formData.note,
-		image: ""
-	}
-	MemberAPI.Add(member);
-
-	setTimeout(() => {
-		// Code to execute after the delay of 500 milliseconds
-		// This code will be executed once the delay has passed
-		// You can add your desired logic here
-		var newMemId = MemberAPI.GetByFeatures(member.surname, member.lastname, member.gender, member.childOrder, member.genNo, member.note);
-		var newRela = {};
-		// add relationship
-		if(formData.fid !== "") {
-			newRela = {
-				MainMemId: formData.fid,
-				SubMemId: newMemId,
-				RelateCode: RelaAPI.RELATIONSHIP_enum.PARENT_CHILD,
-				DateStart: member.dob
-			}
-			console.log(RelaAPI.Add(newRela));
-		}
-		if(formData.mid !== "") {
-			newRela = {
-				MainMemId: formData.mid,
-				SubMemId: newMemId,
-				RelateCode: RelaAPI.RELATIONSHIP_enum.PARENT_CHILD,
-				DateStart: member.dob
-			}
-			console.log(RelaAPI.Add(newRela));
-		}
-		if(partnerIds !== null) {
-			partnerIds.forEach(partnerId => {
-				newRela = {
-					MainMemId: partnerId,
-					SubMemId: newMemId,
-					RelateCode: RelaAPI.RELATIONSHIP_enum.MARRIED,
-					DateStart: ""
-				}
-				console.log(RelaAPI.Add(newRela));
-			})
-		}
-
-	}, 500);
-
-
 }
