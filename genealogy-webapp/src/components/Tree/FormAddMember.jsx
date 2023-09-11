@@ -179,7 +179,7 @@ export default function FormAddMember(props) {
 		console.log(member);
 		addMember(member);
 
-		await new Promise(resolve => setTimeout(resolve, 2000));
+		await new Promise(resolve => setTimeout(resolve, 500));
 		let features = {
 			surname: member.surname,
 			lastname: member.lastname,

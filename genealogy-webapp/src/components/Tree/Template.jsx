@@ -3,19 +3,19 @@ import FamilyTree from '@balkangraph/familytree.js';
 
 FamilyTree.templates.myTemplate = Object.assign({}, FamilyTree.templates.tommy);
 FamilyTree.templates.myTemplate.size = [250, 150];
-FamilyTree.templates.myTemplate.node ='<rect x="0" y="0" width="200" height="100" rx="10" ry="10" stroke-width="1" stroke="#aeaeae"></rect>';
+FamilyTree.templates.myTemplate.node = '<rect x="0" y="0" width="200" height="100" rx="10" ry="10" stroke-width="1" stroke="#aeaeae"></rect>';
 FamilyTree.templates.myTemplate.defs = '';
 FamilyTree.templates.myTemplate.field_0 = '<text style="font-size: 20px;" fill="#ffffff" x="100" y="90" text-anchor="middle">{val}</text>';
 FamilyTree.templates.myTemplate.field_1 = '<text style="font-size: 10px;" fill="#ffffff" x="100" y="60" text-anchor="middle">{val}</text>';
 
-FamilyTree.templates.myTemplate.pointer =
-'<g data-pointer="pointer" transform="matrix(0,0,0,0,100,100)">><g transform="matrix(0.3,0,0,0.3,-17,-17)">'
-+ '<polygon fill="rgb(255, 202, 40)" points="53.004,173.004 53.004,66.996 0,120" />'
-+ '<polygon fill="rgb(255, 202, 40)" points="186.996,66.996 186.996,173.004 240,120" />'
-+ '<polygon fill="rgb(255, 202, 40)" points="66.996,53.004 173.004,53.004 120,0" />'
-+ '<polygon fill="rgb(255, 202, 40)" points="120,240 173.004,186.996 66.996,186.996" />'
-+ '<circle fill="rgb(255, 202, 40)" cx="120" cy="120" r="30" />'
-+ '</g></g>';
+// FamilyTree.templates.myTemplate.pointer =
+// '<g data-pointer="pointer" transform="matrix(0,0,0,0,100,100)">><g transform="matrix(0.3,0,0,0.3,-17,-17)">'
+// + '<polygon fill="rgb(255, 202, 40)" points="53.004,173.004 53.004,66.996 0,120" />'
+// + '<polygon fill="rgb(255, 202, 40)" points="186.996,66.996 186.996,173.004 240,120" />'
+// + '<polygon fill="rgb(255, 202, 40)" points="66.996,53.004 173.004,53.004 120,0" />'
+// + '<polygon fill="rgb(255, 202, 40)" points="120,240 173.004,186.996 66.996,186.996" />'
+// + '<circle fill="rgb(255, 202, 40)" cx="120" cy="120" r="30" />'
+// + '</g></g>';
 FamilyTree.templates.myTemplate_male = Object.assign({}, FamilyTree.templates.myTemplate);
 FamilyTree.templates.myTemplate_male.node = '<rect x="0" y="25" width="200" height="100" rx="10" ry="10" fill="#039be5" stroke-width="1" stroke="#aeaeae"></rect>';
 FamilyTree.templates.myTemplate_female = Object.assign({}, FamilyTree.templates.myTemplate);
@@ -25,7 +25,7 @@ FamilyTree.templates.myTemplate_female.node = '<rect x="0" y="25" width="200" he
 function TreeTemplate(nodes) {
 	const [divRef, setDivRef] = useState(React.createRef());
 	const [family, setFamily] = useState(null);
-	
+
 	useEffect(() => {
 		const nodeBinding = {
 			field_0: 'name',
@@ -37,14 +37,57 @@ function TreeTemplate(nodes) {
 			nodes: nodes.nodes,
 			nodeBinding: nodeBinding,
 			template: "myTemplate",
-			mode:"light",
-			scaleInitial:FamilyTree.match.boundary
+			mode: "light",
+			// miniMap: true,
+			scaleInitial: FamilyTree.match.boundary,
+			menu: {
+				preview_pdf: {
+					text: "Preview PDF",
+					// icon: OrgChart.icon.pdf(24, 24, "#7A7A7A"),
+					onClick: () => pdfPreview()
+				},
+				export_pdf: {
+					text: "Export PDF",
+					// icon: OrgChart.icon.pdf(24, 24, "#7A7A7A"),
+					onClick: () => pdfExport()
+				}
+			},
+			toolbar: {
+				layout: false,
+				zoom: true,
+				fit: true,
+				expandAll: false,
+				fullScreen: false
+			},
+			orderBy: {
+				field: "child_order",
+				desc: false
+			},
+			levelSeparation: 100,
+			siblingSeparation: 50,
+			subtreeSeparation: 90,
+			minPartnerSeparation: 20,
 		}
 		const myFam = new FamilyTree(divRef.current, concept);
-		
-		setFamily(myFam);
-	}, [nodes.nodes, divRef, ]);
 
+		setFamily(myFam);
+	}, [nodes.nodes, divRef,]);
+
+
+	function pdfPreview() {
+		family.exportPDFPreview({
+			landscape: true,
+			format: "A4",
+			expandChildren: false
+		});
+	}
+	function pdfExport() {
+		family.exportPDF({
+			landscape: true,
+			format: "A1",
+			expandChildren: false
+		});
+	}
 
 	return (
 		<>
@@ -52,5 +95,7 @@ function TreeTemplate(nodes) {
 		</>
 	);
 }
+
+
 
 export default TreeTemplate;
