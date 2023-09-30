@@ -36,6 +36,7 @@ export const ACTIONS = {
 	SERVER_EVENT_DELETE: "delete",
 
 	MEMBER_GET_ALL: "GetAll",
+	MEMBER_GET_BY_ID: "GetById",
 	MEMBER_GET_BY_FEATURES: "GetByFeatures",
 	MEMBER_GET_LEADER: "GetLeader",
 	MEMBER_SEARCH_BY_NAME: "SearchByName",
@@ -43,7 +44,7 @@ export const ACTIONS = {
 	MEMBER_FILTER_BY_PLACE: "FilterByPlace",
 	MEMBER_FILTER_BY_GEN: "FilterByGen",
 	MEMBER_ADD: "Add",
-	MEMBER_EDIT: "edit",
+	MEMBER_EDIT: "Edit",
 	MEMBER_DELETE: "delete",
 
 	CLAN_EVENT_GET_ALL: "GetAll",

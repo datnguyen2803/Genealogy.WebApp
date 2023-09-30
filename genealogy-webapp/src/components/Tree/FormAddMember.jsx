@@ -26,7 +26,7 @@ export default function FormAddMember(props) {
 		// dod: "",
 		birthPlace: "",
 		currentPlace: "",
-		genNo: 0,
+		// genNo: 0,
 		childOrder: 0,
 		isClanLeader: false,
 		note: "",

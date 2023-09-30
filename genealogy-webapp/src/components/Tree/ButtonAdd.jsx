@@ -2,6 +2,7 @@ import React from 'react';
 import {useState, useEffect} from 'react'
 import './ButtonAdd.css'
 import FormAddMember from './FormAddMember';
+import FormEditMember from './FormEditMember';
 
 export default function ButtonAdd() {
 	const [showForm, setShowForm] = useState(false);
@@ -11,8 +12,8 @@ export default function ButtonAdd() {
 	};
 	return (
 		<>
-			<button className="button-add" onClick={handleClick}>Thêm thành viên</button>
-			{showForm && <FormAddMember onClose={() => setShowForm(false)} />}
+			<button className="button-add" onClick={handleClick}>Sửa thành viên</button>
+			{showForm && <FormEditMember onClose={() => setShowForm(false)} />}
 		</>
 	);
 }
