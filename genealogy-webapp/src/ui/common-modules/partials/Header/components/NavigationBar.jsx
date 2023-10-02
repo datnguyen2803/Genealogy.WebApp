@@ -8,9 +8,9 @@ import "primereact/resources/themes/lara-light-indigo/theme.css";
 import "primereact/resources/primereact.min.css";
 import { InputText } from 'primereact/inputtext';
 
-import WebIcon from '../../assets/images/family-tree.png';
+import WebIcon from '../../../../assets/images/family-tree.png';
 
-export default function HeaderView() {
+export default function NavigationBar() {
 	const items = [
 		{
 			label: 'Giới thiệu',
@@ -18,7 +18,6 @@ export default function HeaderView() {
 		},
 		{
 			label: 'Cây phả hệ',
-			
 			icon: 'pi pi-fw pi-pencil',
 		},
 		{

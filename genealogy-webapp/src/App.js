@@ -24,7 +24,7 @@
 
 import {useState, useEffect} from 'react'
 import TreeView from './components/Tree/View';
-import HeaderView from './components/Header/View';
+import Header from './ui/common-modules/partials/Header/Header.jsx'
 import GetCat from './components/API/API';
 
 import './App.css'
@@ -32,7 +32,7 @@ import './App.css'
 export default function App() {
 	return (
 		<>
-			<HeaderView />
+			<Header />
 			<TreeView />
 			{/* <TimelineView/> */}
 		</>
