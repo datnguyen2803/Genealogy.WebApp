@@ -8,7 +8,6 @@ export default function Header() {
 	return (
 		<div className="card">
 			<NavigationBar/>
-			<SearchBar />
 		</div>
 	)
 }

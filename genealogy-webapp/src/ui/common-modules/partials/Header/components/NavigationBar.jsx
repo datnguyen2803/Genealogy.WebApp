@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { Menubar } from 'primereact/menubar';
+import SearchBar from './SearchBar';
 //theme
 import "primereact/resources/themes/lara-light-indigo/theme.css";
 
@@ -45,7 +46,7 @@ export default function NavigationBar() {
 	];
 
 	const web_logo = <img alt="logo" src={WebIcon} height="40" className="mr-2"></img>;
-	const search_bar = <InputText placeholder="Tìm kiếm" type="text" className="w-full" />;
+	const search_bar = <SearchBar />;
 
 	return (
 		<div className="card">
