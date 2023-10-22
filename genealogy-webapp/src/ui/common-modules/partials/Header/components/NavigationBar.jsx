@@ -10,6 +10,8 @@ import "primereact/resources/primereact.min.css";
 import { InputText } from 'primereact/inputtext';
 
 import WebIcon from '../../../../assets/images/family-tree.png';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import TestPage from './TestPage';
 
 export default function NavigationBar() {
 	const items = [
@@ -20,6 +22,9 @@ export default function NavigationBar() {
 		{
 			label: 'Cây phả hệ',
 			icon: 'pi pi-fw pi-pencil',
+			command: () => {
+				window.location.href = '/test';
+			},
 		},
 		{
 			label: 'Dòng sự kiện',
@@ -49,8 +54,18 @@ export default function NavigationBar() {
 	const search_bar = <SearchBar />;
 
 	return (
-		<div className="card">
-			<Menubar model={items} start={web_logo} end={search_bar} />
-		</div>
+		<>
+			<Router>
+				<div className="card">
+					<Menubar model={items} start={web_logo} end={search_bar} />
+					<Routes>
+						<Route path='/test' element={<TestPage />}>
+							{/* <TestPage /> */}
+						</Route>
+					</Routes>
+				</div>
+			</Router>
+		</>
+		
 	)
 }
