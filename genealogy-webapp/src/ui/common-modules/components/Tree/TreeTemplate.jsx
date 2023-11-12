@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import FamilyTree from '@balkangraph/familytree.js';
-import './Template.css'
 
 FamilyTree.templates.myTemplate = Object.assign({}, FamilyTree.templates.tommy);
 FamilyTree.templates.myTemplate.size = [550, 350];

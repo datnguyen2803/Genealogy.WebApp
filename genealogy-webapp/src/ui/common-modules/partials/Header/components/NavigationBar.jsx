@@ -7,23 +7,28 @@ import "primereact/resources/themes/lara-light-indigo/theme.css";
 
 //core
 import "primereact/resources/primereact.min.css";
-import { InputText } from 'primereact/inputtext';
 
 import WebIcon from '../../../../assets/images/family-tree.png';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import TestPage from './TestPage';
+import TreePage from '../../../../pages/Tree/TreePage';
+import AboutPage from '../../../../pages/About/AboutPage';
+import HomePage from '../../../../pages/Home/HomePage';
 
 export default function NavigationBar() {
 	const items = [
 		{
 			label: 'Giới thiệu',
 			icon: WebIcon,
+			command: () => {
+				window.location.href = '/home';
+			},
 		},
 		{
 			label: 'Cây phả hệ',
 			icon: 'pi pi-fw pi-pencil',
 			command: () => {
-				window.location.href = '/test';
+				window.location.href = '/tree';
 			},
 		},
 		{
@@ -59,9 +64,10 @@ export default function NavigationBar() {
 				<div className="card">
 					<Menubar model={items} start={web_logo} end={search_bar} />
 					<Routes>
-						<Route path='/test' element={<TestPage />}>
-							{/* <TestPage /> */}
-						</Route>
+						<Route path='/home' element={<HomePage />} />
+						<Route path='/tree' element={<TreePage />} />
+						<Route path='/about' element={<AboutPage />} />
+
 					</Routes>
 				</div>
 			</Router>

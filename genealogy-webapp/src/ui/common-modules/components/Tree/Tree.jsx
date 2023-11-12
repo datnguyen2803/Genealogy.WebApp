@@ -1,140 +1,44 @@
 import React, { useState, useEffect } from 'react';
-import TreeTemplate from './Template';
-import ButtonAdd from './ButtonAdd';
-import * as RelaAPI from '../API/RelationshipAPI';
-import * as MemberAPI from '../API/MemberAPI';
-import axios from 'axios';
-import * as APIConstant from '../API/Constant';
+import TreeTemplate from './TreeTemplate';
+import * as RelaAPI from '../../../../logic/services/RelationshipAPI';
+import * as MemberAPI from '../../../../logic/services/MemberAPI';
 
-// function MapDataToGraph(nodes, memberList, relationshipList) {
-// 	memberList.forEach((member) => {
-// 		let node = {};
-// 		node.id = member.id;
-// 		node.pids = [];
-// 		node.name = member.surname + ' ' + member.lastname;
-// 		if((member.surname === null) && (member.lastname === null)) {
-// 			if(member.note !== '') {
-// 				node.name = member.note
-// 			} else {
-// 				node.name = "Không nhớ tên"
-// 			}
-// 		}
-// 		node.gender = (member.gender === MemberAPI.MEMBER_GENDER_enum.MALE) ? 'male' : 'female';
-// 		node.dob = member.dob;
-// 		node.dod = member.dod;
-// 		node.birth_place = member.birthPlace;
-// 		node.current_place = member.currentPlace;
-// 		node.is_clan_leader = member.isClanLeader;
-// 		node.gen_no = member.genNo;
-// 		relationshipList.forEach((rela) => {
-// 			if((member.id === rela.subMemId)) {
-// 				let mainMem = memberList.find(mainMember => {
-// 					return mainMember.id === rela.mainMemId;
-// 				})
-// 				switch (rela.relateCode) {
-// 					case RelaAPI.RELATIONSHIP_enum.MARRIED:
-// 						{
-// 							node.pids.push(rela.mainMemId);
-// 							break;
-// 						}
-// 					case RelaAPI.RELATIONSHIP_enum.PARENT_CHILD:
-// 						{
-// 							if(mainMem.gender === MemberAPI.MEMBER_GENDER_enum.MALE) {
-// 								node.fid = rela.mainMemId;
-// 							} else {
-// 								node.mid = rela.mainMemId;
-// 							}
-// 							break;
-// 						}
 
-// 					default:
-// 						{
-// 							// do nothing
-// 							break;
-// 						}
-// 				}
-// 			}
-// 		});
-// 		node.img = member.image;
-
-// 		nodes.push(node);
-// 	})
-// 	console.log(nodes)
-// }
-
-export default function TreeView () {
+export default function Tree () {
 	const defaultDateStr = "0001-01-01T00:00:00";
 	const [allMembers, setAllMembers] = useState([]);
 	const [allRelas, setAllRelas] = useState([]);
 	const [nodes, setNodes] = useState([]);
+
 	useEffect(() => {
-		async function fetchData() {
-		  await GetAllMembers();
-		  await GetAllRelationships();
-		//   await new Promise(resolve => setTimeout(resolve, 2000));
-		//   await GetAllRelationships();
-		//   await new Promise(resolve => setTimeout(resolve, 2000));
-		//   MapDataToGraph();
-		}
-	
-		fetchData();
-	  }, []);
-
-	  useEffect(() => {
-		async function fetchData() {
-
-		let nodes = await getListNode();
-		  MapDataToGraph(nodes);
-		}
-	
-		fetchData();
-	  }, [allMembers, allRelas]);
-
-	async function GetAllMembers() {
-		let apiUrl = 'https://localhost:2803/api' + '/' + APIConstant.CONTROLLERS.MEMBER + '/' + APIConstant.ACTIONS.MEMBER_GET_ALL;
-		let options = {
-			method: "GET",
-			url: apiUrl,
-			headers: {
-				'content-type': 'application/json',
-			},
-			// timeout: 1000
-
-		};
-		await axios.request(options)
-			.then(response => {
-				if (Array.isArray(response.data)) {
-					setAllMembers(response.data);
+		MemberAPI.GetAll()
+			.then((res) => {
+				if (Array.isArray(res)) {
+					setAllMembers(res);
 				}
-
 			})
-			.catch(error => {
-				console.error(error)
+			.catch((err) => {
+				console.log(err)
 			});
-	}
+		// console.log(allMembers);
+	}, []);
 
-	async function GetAllRelationships() {
-		let apiUrl = 'https://localhost:2803/api' + '/' + APIConstant.CONTROLLERS.RELATIONSHIP + '/' + APIConstant.ACTIONS.RELATIONSHIP_GET_ALL;
-		let options = {
-			method: "GET",
-			url: apiUrl,
-			headers: {
-				'content-type': 'application/json',
-			},
-			// timeout: 1000
-
-		};
-		await axios.request(options)
-			.then(response => {
-				if (Array.isArray(response.data)) {
-					setAllRelas(response.data);
+	useEffect(() => {
+		RelaAPI.GetAll()
+			.then((res) => {
+				if (Array.isArray(res)) {
+					setAllRelas(res);
 				}
-
 			})
-			.catch(error => {
-				console.error(error)
+			.catch((err) => {
+				console.log(err)
 			});
-	}
+	}, []);
+
+	useEffect(() => {
+		getListNode();
+	}, [allMembers, allRelas]);
+
 
 	async function getListNode() {
 		const mappedNodes = [];
@@ -144,6 +48,7 @@ export default function TreeView () {
 		allMembers.sort((a, b) => (a.graphOrder > b.graphOrder) ? 1 : -1)
 
 		allMembers.forEach((member) => {
+			// console.log(member);
 			let node = {};
 			node.id = member.id;
 			node.pids = [];
@@ -210,7 +115,6 @@ export default function TreeView () {
 
 			node.field0 = node.name;
 			node.field1 = node.deathName;
-			console.log(node.field1);
 
 			//field 1 format
 			let formattedDateTimeBirth = FormatDateTime(node.dob);
@@ -229,7 +133,6 @@ export default function TreeView () {
 					lunarDeathday = "?-?";
 				}
 			}
-			console.log(lunarDeathday);
 			if(node.dod === defaultDateStr && lunarDeathday === "") {
 				node.field3 ="";
 			} else {
@@ -239,14 +142,10 @@ export default function TreeView () {
 	
 			mappedNodes.push(node);
 		})
-				return mappedNodes;
+		setNodes(mappedNodes);
+		return mappedNodes;
 	}
 
-	function MapDataToGraph(myNodes) {
-		const mappedNodes = myNodes;
-		console.log(mappedNodes);
-		setNodes(mappedNodes);
-	}
 
 	function Summarize() {
 		var member_number = nodes.length;
@@ -262,9 +161,8 @@ export default function TreeView () {
 
 	return (
 		<>
-			<Summarize />
+			{/* <Summarize /> */}
 			<TreeTemplate nodes={nodes} />
-			<ButtonAdd />
 		</>
 	);
 }
