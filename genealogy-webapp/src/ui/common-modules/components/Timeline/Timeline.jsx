@@ -1,6 +1,6 @@
-import TimelineTemplate from './Template';
+import TimelineTemplate from './TimelineTemplate';
 
-export default function TimelineView () {
+export default function Timeline () {
 	let myevents = [{name:"eat"}, {name: "study"}, {name: "sleep"}];
 
 	return (

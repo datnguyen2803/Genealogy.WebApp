@@ -10,10 +10,10 @@ import "primereact/resources/primereact.min.css";
 
 import WebIcon from '../../../../assets/images/family-tree.png';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import TestPage from './TestPage';
 import TreePage from '../../../../pages/Tree/TreePage';
 import AboutPage from '../../../../pages/About/AboutPage';
 import HomePage from '../../../../pages/Home/HomePage';
+import TimelinePage from '../../../../pages/Timeline/TimelinePage';
 
 export default function NavigationBar() {
 	const items = [
@@ -34,6 +34,9 @@ export default function NavigationBar() {
 		{
 			label: 'Dòng sự kiện',
 			icon: 'pi pi-fw pi-user',
+			command: () => {
+				window.location.href = '/timeline';
+			},
 		},
 		{
 			label: 'Admin',
@@ -66,6 +69,7 @@ export default function NavigationBar() {
 					<Routes>
 						<Route path='/home' element={<HomePage />} />
 						<Route path='/tree' element={<TreePage />} />
+						<Route path='/timeline' element={<TimelinePage />} />
 						<Route path='/about' element={<AboutPage />} />
 
 					</Routes>

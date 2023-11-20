@@ -23,9 +23,7 @@
 
 
 import {useState, useEffect} from 'react'
-import TreeView from './components/Tree/View';
 import Header from './ui/common-modules/partials/Header/Header.jsx'
-import GetCat from './components/API/API';
 
 import './App.css'
 
