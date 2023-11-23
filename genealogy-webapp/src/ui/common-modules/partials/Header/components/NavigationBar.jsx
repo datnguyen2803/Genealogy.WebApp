@@ -8,7 +8,7 @@ import "primereact/resources/themes/lara-light-indigo/theme.css";
 //core
 import "primereact/resources/primereact.min.css";
 
-import WebIcon from '../../../../assets/images/family-tree.png';
+import WebIcon from '../../../../assets/images/ic_main.png';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import TreePage from '../../../../pages/Tree/TreePage';
 import AboutPage from '../../../../pages/About/AboutPage';

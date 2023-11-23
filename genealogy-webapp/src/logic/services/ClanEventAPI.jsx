@@ -1,6 +1,14 @@
 import CallAPI from './API';
 import * as APIConstant from '../constants/APIConstant';
 
+export const CLAN_EVENT_TYPE = {
+	MARRY: 0,
+	GIVE_BIRTH: 1,
+	DEATH: 2,
+	BUILD_HOUSE: 3
+}
+
+
 export function GetAll() {
 	let body = {};
 	let retVal = {};

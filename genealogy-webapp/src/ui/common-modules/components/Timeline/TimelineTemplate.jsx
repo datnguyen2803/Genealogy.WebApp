@@ -5,32 +5,107 @@ import TimelineSeparator from '@mui/lab/TimelineSeparator';
 import TimelineConnector from '@mui/lab/TimelineConnector';
 import TimelineContent from '@mui/lab/TimelineContent';
 import TimelineDot from '@mui/lab/TimelineDot';
+import TimelineOppositeContent from '@mui/lab/TimelineOppositeContent';
+import * as ClanEventAPI from '../../../../logic/services/ClanEventAPI'
+import { Typography } from '@mui/material';
+import Images from '../../../assets/images/images'
 
-export default function TimelineTemplate({events}) {
+export default function TimelineTemplate({ events }) {
 	const results = [];
-
-	events.forEach( (currEvent, index)=> {
-		if(index === events.length - 1) {
-			results.push(
-				<TimelineItem>
-				<TimelineSeparator>
-					<TimelineDot />
-				</TimelineSeparator>
-				<TimelineContent>{currEvent.name}</TimelineContent>
-				</TimelineItem>
-			)
-		} else {
-			results.push(
-				<TimelineItem>
-				<TimelineSeparator>
-					<TimelineDot />
-					<TimelineConnector />
-				</TimelineSeparator>
-				<TimelineContent>{currEvent.name}</TimelineContent>
-				</TimelineItem>
-			)
+	let timeDot = 0;
+	events.forEach((currEvent, index) => {
+		let action = "";
+		if (timeDot !== currEvent.year) {
+			timeDot = currEvent.year;
+			results.push(<YearItem year={timeDot} />)
 		}
+		switch (currEvent.type) {
+			case ClanEventAPI.CLAN_EVENT_TYPE.MARRY:
+				action = "cưới";
+				break;
+
+			case ClanEventAPI.CLAN_EVENT_TYPE.GIVE_BIRTH:
+				action = "đẻ";
+				break;
+
+			case ClanEventAPI.CLAN_EVENT_TYPE.DEATH:
+				action = "mất";
+				break;
+
+			case ClanEventAPI.CLAN_EVENT_TYPE.BUILD_HOUSE:
+				action = "xây nhà";
+				break;
+			default:
+				return;
+		}
+		let description = currEvent.mainMemName + " " + action + " " + currEvent.subMemName;
+
+		results.push(<EventItem type={currEvent.type} month={currEvent.month} day={currEvent.day} 
+			description={description} detail={currEvent.detail} />)
 	});
 
-	return (results);
+	console.log(results);
+	return (
+		<Timeline position="right">
+			{results}
+		</Timeline>
+
+	);
+}
+
+function EventItem({ type, month, day, description, detail }) {
+	let icon = null;
+	switch (type) {
+		case ClanEventAPI.CLAN_EVENT_TYPE.MARRY:
+			icon = <img src={Images.ICON_TIMELINE_MARRY} alt="ic_timeline_marry" height="30"></img>
+			break;
+
+		case ClanEventAPI.CLAN_EVENT_TYPE.GIVE_BIRTH:
+			icon = <img src={Images.ICON_TIMELINE_BIRTH} alt="ic_timeline_birth" height="30"></img>
+			break;
+
+		case ClanEventAPI.CLAN_EVENT_TYPE.DEATH:
+			icon = <img src={Images.ICON_TIMELINE_DEATH} alt="ic_timeline_death" height="30"></img>
+			break;
+
+		case ClanEventAPI.CLAN_EVENT_TYPE.BUILD_HOUSE:
+			icon = <img src={Images.ICON_TIMELINE_BUILDHOUSE} alt="ic_timeline_buildhouse" height="30"></img>
+			break;
+		default:
+			return;
+	}
+	return (
+		<TimelineItem>
+			<TimelineOppositeContent color="text.secondary">
+				{day + " - " + month}
+			</TimelineOppositeContent>
+			<TimelineSeparator>
+				<TimelineConnector />
+				<TimelineDot color="primary" variant="outlined">
+					{icon}
+				</TimelineDot>
+				<TimelineConnector />
+			</TimelineSeparator>
+			<TimelineContent>
+				<Typography align='left'>{description}</Typography>
+				<Typography>{detail}</Typography>
+			</TimelineContent>
+		</TimelineItem>
+	);
+}
+
+function YearItem({ year }) {
+	return (
+		<TimelineItem>
+			<TimelineSeparator>
+				<TimelineConnector />
+				<font size="6">
+					{year}
+				</font>
+				<TimelineConnector />
+			</TimelineSeparator>
+			<TimelineContent>
+			</TimelineContent>
+		</TimelineItem>
+	);
 }
