@@ -6,12 +6,26 @@ export const RESPONSE_CODE_enum = {
 
 }
 
+export const MEMBER_GENDER_enum = {
+	MALE: 0,
+	FEMALE: 1,
+}
 
+export const RELATIONSHIP_enum = {
+	MARRY: 0,
+	PARENT_CHILD: 1,
+
+}
+
+export const CLAN_EVENT_TYPE = {
+	MARRY: 0,
+	GIVE_BIRTH: 1,
+	DEATH: 2,
+	BUILD_HOUSE: 3
+}
 
 export const CONTROLLERS = {
 	NONE: "",
-
-	TEST_CAT_FACT: "",
 
 	USER: "User",
 	SERVER_EVENT: "ServerEvent",
@@ -22,8 +36,6 @@ export const CONTROLLERS = {
 
 export const ACTIONS = {
 	NONE: "",
-
-	TEST_CAT_FACT: "",
 
 	USER_LOGIN: "Login",
 	USER_SIGN_UP: "Signup",
@@ -64,3 +76,5 @@ export const ACTIONS = {
 	RELATIONSHIP_DELETE: "delete",
 
 }
+
+export const DEFAULT_DATETIME = "0001-01-01T00:00:00";

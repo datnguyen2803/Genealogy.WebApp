@@ -6,7 +6,7 @@ import TimelineConnector from '@mui/lab/TimelineConnector';
 import TimelineContent from '@mui/lab/TimelineContent';
 import TimelineDot from '@mui/lab/TimelineDot';
 import TimelineOppositeContent from '@mui/lab/TimelineOppositeContent';
-import * as ClanEventAPI from '../../../../logic/services/ClanEventAPI'
+import * as APIConstants from '../../../../logic/constants/APIConstant';
 import { Typography } from '@mui/material';
 import Images from '../../../assets/images/images'
 
@@ -17,22 +17,22 @@ export default function TimelineTemplate({ events }) {
 		let action = "";
 		if (timeDot !== currEvent.year) {
 			timeDot = currEvent.year;
-			results.push(<YearItem year={timeDot} />)
+			results.push(<YearItem key={timeDot} year={timeDot} />)
 		}
 		switch (currEvent.type) {
-			case ClanEventAPI.CLAN_EVENT_TYPE.MARRY:
+			case APIConstants.CLAN_EVENT_TYPE.MARRY:
 				action = "cưới";
 				break;
 
-			case ClanEventAPI.CLAN_EVENT_TYPE.GIVE_BIRTH:
+			case APIConstants.CLAN_EVENT_TYPE.GIVE_BIRTH:
 				action = "đẻ";
 				break;
 
-			case ClanEventAPI.CLAN_EVENT_TYPE.DEATH:
+			case APIConstants.CLAN_EVENT_TYPE.DEATH:
 				action = "mất";
 				break;
 
-			case ClanEventAPI.CLAN_EVENT_TYPE.BUILD_HOUSE:
+			case APIConstants.CLAN_EVENT_TYPE.BUILD_HOUSE:
 				action = "xây nhà";
 				break;
 			default:
@@ -40,11 +40,11 @@ export default function TimelineTemplate({ events }) {
 		}
 		let description = currEvent.mainMemName + " " + action + " " + currEvent.subMemName;
 
-		results.push(<EventItem type={currEvent.type} month={currEvent.month} day={currEvent.day} 
+		results.push(<EventItem key={currEvent.id} type={currEvent.type} month={currEvent.month} day={currEvent.day} 
 			description={description} detail={currEvent.detail} />)
 	});
 
-	console.log(results);
+	// console.log(results);
 	return (
 		<Timeline position="right">
 			{results}
@@ -56,19 +56,19 @@ export default function TimelineTemplate({ events }) {
 function EventItem({ type, month, day, description, detail }) {
 	let icon = null;
 	switch (type) {
-		case ClanEventAPI.CLAN_EVENT_TYPE.MARRY:
+		case APIConstants.CLAN_EVENT_TYPE.MARRY:
 			icon = <img src={Images.ICON_TIMELINE_MARRY} alt="ic_timeline_marry" height="30"></img>
 			break;
 
-		case ClanEventAPI.CLAN_EVENT_TYPE.GIVE_BIRTH:
+		case APIConstants.CLAN_EVENT_TYPE.GIVE_BIRTH:
 			icon = <img src={Images.ICON_TIMELINE_BIRTH} alt="ic_timeline_birth" height="30"></img>
 			break;
 
-		case ClanEventAPI.CLAN_EVENT_TYPE.DEATH:
+		case APIConstants.CLAN_EVENT_TYPE.DEATH:
 			icon = <img src={Images.ICON_TIMELINE_DEATH} alt="ic_timeline_death" height="30"></img>
 			break;
 
-		case ClanEventAPI.CLAN_EVENT_TYPE.BUILD_HOUSE:
+		case APIConstants.CLAN_EVENT_TYPE.BUILD_HOUSE:
 			icon = <img src={Images.ICON_TIMELINE_BUILDHOUSE} alt="ic_timeline_buildhouse" height="30"></img>
 			break;
 		default:

@@ -1,59 +1,38 @@
 import CallAPI from './API';
 import * as APIConstant from '../constants/APIConstant';
 
-export const CLAN_EVENT_TYPE = {
-	MARRY: 0,
-	GIVE_BIRTH: 1,
-	DEATH: 2,
-	BUILD_HOUSE: 3
-}
-
 
 export function GetAll() {
 	let body = {};
-	let retVal = {};
-	let response = CallAPI(APIConstant.CONTROLLERS.CLAN_EVENT, APIConstant.ACTIONS.CLAN_EVENT_GET_ALL, body);
-	return response;
+	return CallAPI(APIConstant.CONTROLLERS.CLAN_EVENT, APIConstant.ACTIONS.CLAN_EVENT_GET_ALL, body);
 }
 
 export function FilterByMem(member) {
 	let body = member;
-	let retVal = {};
-	let response = CallAPI(APIConstant.CONTROLLERS.CLAN_EVENT, APIConstant.ACTIONS.CLAN_EVENT_FILTER_BY_MEM, body);
-	return response;
+	return CallAPI(APIConstant.CONTROLLERS.CLAN_EVENT, APIConstant.ACTIONS.CLAN_EVENT_FILTER_BY_MEM, body);
 }
 
 export function FilterByType(type) {
 	let body = {type: type};
-	let retVal = {};
-	let response = CallAPI(APIConstant.CONTROLLERS.CLAN_EVENT, APIConstant.ACTIONS.CLAN_EVENT_FILTER_BY_TYPE, body);
-	return response;
+	return CallAPI(APIConstant.CONTROLLERS.CLAN_EVENT, APIConstant.ACTIONS.CLAN_EVENT_FILTER_BY_TYPE, body);
 }
 
 export function FilterByTime(start_time, end_time) {
 	let body = {startTime: start_time, endTime: end_time, };
-	let retVal = {};
-	let response = CallAPI(APIConstant.CONTROLLERS.CLAN_EVENT, APIConstant.ACTIONS.CLAN_EVENT_FILTER_BY_TIME, body);
-	return response;
+	return CallAPI(APIConstant.CONTROLLERS.CLAN_EVENT, APIConstant.ACTIONS.CLAN_EVENT_FILTER_BY_TIME, body);
 }
 
 export function Add(new_clan_event) {
 	let body = new_clan_event;
-	let retVal = {};
-	let response = CallAPI(APIConstant.CONTROLLERS.CLAN_EVENT, APIConstant.ACTIONS.CLAN_EVENT_ADD, body);
-	return response;
+	return CallAPI(APIConstant.CONTROLLERS.CLAN_EVENT, APIConstant.ACTIONS.CLAN_EVENT_ADD, body);
 }
 
 export function Edit(edit_clan_event) {
 	let body = edit_clan_event;
-	let retVal = {};
-	let response = CallAPI(APIConstant.CONTROLLERS.CLAN_EVENT, APIConstant.ACTIONS.CLAN_EVENT_EDIT, body);
-	return response;
+	return CallAPI(APIConstant.CONTROLLERS.CLAN_EVENT, APIConstant.ACTIONS.CLAN_EVENT_EDIT, body);
 }
 
 export function Delete(delete_clan_event) {
 	let body = delete_clan_event;
-	let retVal = {};
-	let response = CallAPI(APIConstant.CONTROLLERS.CLAN_EVENT, APIConstant.ACTIONS.CLAN_EVENT_DELETE, body);
-	return response;
+	return CallAPI(APIConstant.CONTROLLERS.CLAN_EVENT, APIConstant.ACTIONS.CLAN_EVENT_DELETE, body);
 }

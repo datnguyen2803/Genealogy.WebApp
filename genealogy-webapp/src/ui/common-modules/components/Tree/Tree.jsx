@@ -2,10 +2,11 @@ import React, { useState, useEffect } from 'react';
 import TreeTemplate from './TreeTemplate';
 import * as RelaAPI from '../../../../logic/services/RelationshipAPI';
 import * as MemberAPI from '../../../../logic/services/MemberAPI';
+import * as APIConstants from '../../../../logic/constants/APIConstant';
 
 
 export default function Tree () {
-	const defaultDateStr = "0001-01-01T00:00:00";
+	const defaultDateStr = APIConstants.DEFAULT_DATETIME;
 	const [allMembers, setAllMembers] = useState([]);
 	const [allRelas, setAllRelas] = useState([]);
 	const [nodes, setNodes] = useState([]);
@@ -45,7 +46,7 @@ export default function Tree () {
 		allMembers.forEach((member) => {
 			member.graphOrder = member.childOrder * 10 + member.gender;
 		})
-		allMembers.sort((a, b) => (a.graphOrder > b.graphOrder) ? 1 : -1)
+		allMembers.sort((a, b) => (a.graphOrder > b.graphOrder) ? 1 : -1);
 
 		allMembers.forEach((member) => {
 			// console.log(member);
@@ -64,8 +65,8 @@ export default function Tree () {
 				node.deathName = member.note.split(' ').slice(0, 3).join(' ');
 			}
 
-			node.gender = (member.gender === MemberAPI.MEMBER_GENDER_enum.MALE) ? 'male' : 'female';
-			if(member.gender === MemberAPI.MEMBER_GENDER_enum.MALE) {
+			node.gender = (member.gender === APIConstants.MEMBER_GENDER_enum.MALE) ? 'male' : 'female';
+			if(member.gender === APIConstants.MEMBER_GENDER_enum.MALE) {
 				node.tags = ["Male"];
 			} else {
 				node.tags = ["Female"]
@@ -87,14 +88,14 @@ export default function Tree () {
 						return mainMember.id === rela.mainMemId;
 					})
 					switch (rela.relateCode) {
-						case RelaAPI.RELATIONSHIP_enum.MARRIED:
+						case APIConstants.RELATIONSHIP_enum.MARRY:
 							{
 								node.pids.push(rela.mainMemId);
 								break;
 							}
-						case RelaAPI.RELATIONSHIP_enum.PARENT_CHILD:
+						case APIConstants.RELATIONSHIP_enum.PARENT_CHILD:
 							{
-								if(mainMem.gender === MemberAPI.MEMBER_GENDER_enum.MALE) {
+								if(mainMem.gender === APIConstants.MEMBER_GENDER_enum.MALE) {
 									node.fid = rela.mainMemId;
 								} else {
 									node.mid = rela.mainMemId;

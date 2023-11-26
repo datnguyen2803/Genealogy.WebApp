@@ -242,7 +242,7 @@ export default function FormEditMember(props) {
 		// 	newRela = {
 		// 		MainMemId: formData.pid,
 		// 		SubMemId: getMemberResponse.id,
-		// 		RelateCode: RelaAPI.RELATIONSHIP_enum.MARRIED,
+		// 		RelateCode: RelaAPI.RELATIONSHIP_enum.MARRY,
 		// 		DateStart: ""
 		// 	}
 		// 	console.log(newRela);
@@ -250,7 +250,7 @@ export default function FormEditMember(props) {
 		// 	newRela = {
 		// 		MainMemId: getMemberResponse.id,
 		// 		SubMemId: formData.pid,
-		// 		RelateCode: RelaAPI.RELATIONSHIP_enum.MARRIED,
+		// 		RelateCode: RelaAPI.RELATIONSHIP_enum.MARRY,
 		// 		DateStart: ""
 		// 	}
 		// 	addRela(newRela)
